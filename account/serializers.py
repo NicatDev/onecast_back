@@ -103,3 +103,12 @@ class ProfileForSingleSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 #endofsingleview
+class UserSerializerForSettingEdit(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username','password','email')
+
+class ProfileSerializerForSettingEdit(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('phone_number',)

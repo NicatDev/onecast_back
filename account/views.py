@@ -112,4 +112,5 @@ class TalentPageView(APIView):
 #talentpagesettingeditview
 class TalentSettingEditView(APIView):
     def put(self):
-        return []
+        data = self.request.data
+        data.get('')
