@@ -111,7 +111,7 @@ class TalentPageView(APIView):
         return Response(employee.data)
     
 class TalentModelFilterPage(generics.ListAPIView):
-    serialzier_class = ProfileForFilterPageSerializer
+    serializer_class = ProfileForFilterPageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
     pagination_class = CustomPagination
@@ -120,7 +120,7 @@ class TalentModelFilterPage(generics.ListAPIView):
         return Profile.objects.filter(is_active=True,is_visible=True,is_model=True)
 
 class TalentChildFilterPage(generics.ListAPIView):
-    serialzier_class = ProfileForFilterPageSerializer
+    serializer_class = ProfileForFilterPageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
     pagination_class = CustomPagination
@@ -129,7 +129,7 @@ class TalentChildFilterPage(generics.ListAPIView):
         return Profile.objects.filter(is_active=True,is_visible=True,is_child=True)
 
 class TalentActorFilterPage(generics.ListAPIView):
-    serialzier_class = ProfileForFilterPageSerializer
+    serializer_class = ProfileForFilterPageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
     pagination_class = CustomPagination
