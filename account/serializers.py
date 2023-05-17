@@ -61,7 +61,7 @@ class CompanySerializer(serializers.ModelSerializer):
 class ProfileForHomaPageTalentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('id','image1','is_premium','gender','first_name','last_name','is_actor','is_model','age','height','eyecolor','weight',)
+        fields = ('id','image1','is_premium','gender','first_name','last_name','is_actor','is_model','is_child',)
 
 class PopularSerializer(serializers.ModelSerializer):
     
@@ -102,6 +102,12 @@ class ProfileForSingleSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
         
+class ProfileForFilterPageSerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Profile
+        fields = ('image1','first_name','last_name','is_actor','is_model','is_child','is_premium') 
+    
 #endofsingleview
 class UserSerializerForSettingEdit(serializers.ModelSerializer):
     class Meta:

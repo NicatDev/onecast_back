@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
@@ -101,14 +101,42 @@ class TalentSingleView(generics.RetrieveAPIView):
     
 #talentpageview
 class TalentPageView(APIView):
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ProductFilter
-    pagination_class = CustomPagination
+    # filter_backends = (DjangoFilterBackend,)
+    # filterset_class = ProductFilter
+    # pagination_class = CustomPagination
     def get(self):
         queryset = Profile.objects.get(user = self.request.user.id)
         serializer = ProfileForSingleSerializer
         employee = serializer(queryset)
         return Response(employee.data)
+    
+class TalentModelFilterPage(generics.ListAPIView):
+    serialzier_class = ProfileForFilterPageSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilter
+    pagination_class = CustomPagination
+    
+    def get_queryset(self):
+        return Profile.objects.filter(is_active=True,is_visible=True,is_model=True)
+
+class TalentChildFilterPage(generics.ListAPIView):
+    serialzier_class = ProfileForFilterPageSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilter
+    pagination_class = CustomPagination
+    
+    def get_queryset(self):
+        return Profile.objects.filter(is_active=True,is_visible=True,is_child=True)
+
+class TalentActorFilterPage(generics.ListAPIView):
+    serialzier_class = ProfileForFilterPageSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilter
+    pagination_class = CustomPagination
+    
+    def get_queryset(self):
+        return Profile.objects.filter(is_active=True,is_visible=True,is_actor=True)
+    
 #talentpagesettingeditview
 class TalentSettingEditView(APIView):
     def put(self):

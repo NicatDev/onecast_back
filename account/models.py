@@ -100,6 +100,7 @@ class Profile(BaseMixin):
     height = models.SmallIntegerField()
     education = models.TextField()
     age = models.PositiveIntegerField()
+    birthday = models.DateField(null=True,blank=True)
     cv = models.FileField(null=True,blank=True)
     image1 = models.ImageField(upload_to='media/images',null=True,blank=True)
     image2 = models.ImageField(upload_to='media/images',null=True,blank=True)
