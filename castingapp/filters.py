@@ -16,7 +16,7 @@ class ProductFilter(django_filters.FilterSet):
     # name = django_filters.CharFilter(lookup_expr='icontains')
     # description = django_filters.CharFilter(lookup_expr='icontains')
     gender = django_filters.CharFilter(lookup_expr='icontains')
-    age = CustomNumericRangeFilter()         
+    age = django_filters.RangeFilter()        
     height = django_filters.NumericRangeFilter()                                                             
     class Meta:
         model = Profile
