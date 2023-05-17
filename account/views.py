@@ -137,6 +137,15 @@ class TalentActorFilterPage(generics.ListAPIView):
     def get_queryset(self):
         return Profile.objects.filter(is_active=True,is_visible=True,is_actor=True)
     
+class TalentAllFilterPage(generics.ListAPIView):
+    serializer_class = ProfileForFilterPageSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilter
+    pagination_class = CustomPagination
+    
+    def get_queryset(self):
+        return Profile.objects.filter(is_active=True,is_visible=True)
+    
 #talentpagesettingeditview
 class TalentSettingEditView(APIView):
     def put(self):
