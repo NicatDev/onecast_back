@@ -8,7 +8,7 @@ from account.serializers import ProfileForFilterPageSerializer,UserSerializerFor
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
-from castingapp.paginations import CustomPagination
+from castingapp.paginations import Custom9Pagination,Custom12Pagination
 User = get_user_model()
 
 # Create your views here.
@@ -114,7 +114,7 @@ class TalentModelFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
-    pagination_class = CustomPagination
+    pagination_class = Custom9Pagination
     
     def get_queryset(self):
         return Profile.objects.filter(is_active=True,is_visible=True,is_model=True)
@@ -123,7 +123,7 @@ class TalentChildFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
-    pagination_class = CustomPagination
+    pagination_class = Custom9Pagination
     
     def get_queryset(self):
         return Profile.objects.filter(is_active=True,is_visible=True,is_child=True)
@@ -132,7 +132,7 @@ class TalentActorFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
-    pagination_class = CustomPagination
+    pagination_class = Custom9Pagination
     
     def get_queryset(self):
         return Profile.objects.filter(is_active=True,is_visible=True,is_actor=True)
@@ -141,7 +141,16 @@ class TalentAllFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
-    pagination_class = CustomPagination
+    pagination_class = Custom12Pagination
+    
+    def get_queryset(self):
+        return Profile.objects.filter(is_active=True,is_visible=True)
+
+class TalentFilterPage(generics.ListAPIView):
+    serializer_class = ProfileForFilterPageSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilter
+    pagination_class = Custom9Pagination
     
     def get_queryset(self):
         return Profile.objects.filter(is_active=True,is_visible=True)

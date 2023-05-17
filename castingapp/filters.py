@@ -15,11 +15,14 @@ class ProductFilter(django_filters.FilterSet):
     # category__name = django_filters.CharFilter(lookup_expr='icontains')
     # name = django_filters.CharFilter(lookup_expr='icontains')
     # description = django_filters.CharFilter(lookup_expr='icontains')
+    is_child = django_filters.BooleanFilter()
+    is_actor = django_filters.BooleanFilter()
+    is_model = django_filters.BooleanFilter()
     gender = django_filters.CharFilter(lookup_expr='icontains')
     age = django_filters.RangeFilter()        
     height = django_filters.RangeFilter()                                                         
     class Meta:
         model = Profile
-        fields = ['age', "gender", "height"]
-        
+        fields = ['age', "gender", "height",'is_actor','is_model','is_child']
+         
 #deyis
