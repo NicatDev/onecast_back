@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
@@ -112,5 +112,37 @@ class TalentPageView(APIView):
 #talentpagesettingeditview
 class TalentSettingEditView(APIView):
     def put(self):
+        user = self.request.user
+        
+        # if data.get('phone_number') == '':
+        #     del data['phone_number']
+        
+        if 'phone_number' in data:
+            if data.get('phone_number') != '':
+               number = data.pop('phone_number')
+               profile_id = data.pop('profile_id')
+               instance = Profile.objects.get(id = profile_id)
+               pserializer = ProfileSerializerForSettingEdit(instance,data = {'phone_number':number},partial=True)
+               pserializer.is_valid(raise_exception=True)
+               pserializer.save()
+               
+        if 'password' in data:
+            if data.get('password') != '':
+                password = data.pop('password')
+                user.set_password(password)
+                user.save()
+                
         data = self.request.data
-        data.get('')
+        userinstance = self.request.user
+        if 'username' in data:
+            if data.get('username') != '':
+                userseria = UserSerializerForSettingEdit(userinstance,data={'username':data.get('username')},partial=True)
+                userseria.is_valid()
+                userseria.save()
+        if 'email' in data:
+            if data.get('email') != '':
+                userseria = UserSerializerForSettingEdit(userinstance,data={'email':data.get('email')},partial=True)
+                userseria.is_valid()
+                userseria.save()
+        return Response({'message':'success'},status=200)
+            

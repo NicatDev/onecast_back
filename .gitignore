@@ -1,0 +1,17 @@
+
+
+# Virtual environment
+myenv/
+pip-selfcheck.json
+
+# Django files
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.bak
+
+# DRF files
+media/
+
+
