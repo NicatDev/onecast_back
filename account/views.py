@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
@@ -154,6 +154,11 @@ class TalentFilterPage(generics.ListAPIView):
     
     def get_queryset(self):
         return Profile.objects.filter(is_active=True,is_visible=True)
+    
+class CompanyListView(generics.ListAPIView):
+    serializer_class = CompanyListSerializer 
+    queryset = Company.objects.all()
+    # pagination_class = Custom12Pagination
     
 #talentpagesettingeditview
 class TalentSettingEditView(APIView):

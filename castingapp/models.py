@@ -64,3 +64,12 @@ class Partners(models.Model):
     
     def __str__(self):
         return self.title
+    
+class Contact_us(models.Model):
+    full_name = models.CharField(max_length=50)
+    title = models.CharField(max_length=120)
+    message = models.TextField(null=True,blank=True)
+    email = models.EmailField(null=True,blank=True)
+    
+    def __str__(self):
+        return self.full_name + ' ' + self.title

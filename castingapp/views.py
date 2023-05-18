@@ -106,7 +106,6 @@ class MagazineSingleView(generics.RetrieveAPIView):
     lookup_field = 'slug'
     
     
-        
-        
-        
-        
+class ContactView(generics.CreateAPIView):
+    serializer_class = ContactUsSerializer
+    queryset = Contact_us

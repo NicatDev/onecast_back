@@ -118,3 +118,8 @@ class ProfileSerializerForSettingEdit(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('phone_number',)
+        
+class CompanyListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = '__all__'

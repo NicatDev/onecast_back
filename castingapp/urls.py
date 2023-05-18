@@ -13,6 +13,8 @@ urlpatterns = [
     path('DeleteFromCard/<int:id>',DeleteFromCard.as_view(), name='DeleteFromCard'),
     path('MagazinListView/',MagazinListView.as_view(), name='MagazinListView'),
     path('MagazineSingleView/<slug>',MagazineSingleView.as_view(), name='MagazineSingleView'),
+    path('ContactView/',ContactView.as_view(), name='ContactView'),
+    
 ]
 
 

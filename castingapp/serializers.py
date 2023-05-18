@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from castingapp.models import News,Partners,Favourites,SentCard,CardItem
+from castingapp.models import News,Partners,Favourites,SentCard,CardItem,Contact_us
 from account.serializers import ProfileSerializer
 class MagazineSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,4 +46,10 @@ class CardItemSerializer(serializers.ModelSerializer):
         model = CardItem
         fields = '__all__'
         
-    
+#ContactUs
+
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact_us
+        fields = '__all__'
