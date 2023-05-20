@@ -123,3 +123,4 @@ class CompanyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = '__all__'
+        

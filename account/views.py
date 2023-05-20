@@ -65,18 +65,12 @@ class CompanyLoginView(APIView):
 
 class RegistrationView(APIView):     
     def post(self,request,format=None):
-
-
-        print(request.data)
-        print(request.data.get('username')[0])
         data=request.data
         image=request.FILES.pop('image1')
-        print(request.data.get('full_name'))
         userdata = {'username':data.pop('username')[0],
                     'email':data.pop('email')[0],
                     'password':data.pop('password')[0]}
         if data.get('fullname'):
-            
             first_name, last_name = data.pop('fullname')[0].split()
             data['first_name'] = first_name
             data['last_name'] = last_name
@@ -242,3 +236,12 @@ class TalentSettingEditView(APIView):
                 userseria.save()
         return Response({'message':'success'},status=200)
             
+class CheckUsername(models.Model):
+    def post(self):
+        username = self.request.data.get('username')
+        email = self.request.data.get('email')
+        if User.objects.filter(username=username).exists():
+            return Response({'message':'Bu username artiq istifade olunub'})
+        elif User.objects.filter(email=email).exists():
+            return Response({'message':'Bu emaille hesab movcuddur'})
+        return Response({'message':'okay'})
