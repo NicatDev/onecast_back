@@ -71,9 +71,9 @@ class RegistrationView(APIView):
                     'email':data.pop('email'),
                     'password':data.pop('password')}
         if data.get('fullname'):
-            first_name, last_name = data.get('fullname').split()
-            data.update(first_name)
-            data.update(last_name)
+            first_name, last_name = data.pop('fullname').split()
+            data['first_name'] = first_name
+            data['last_name'] = last_name
         user_serializer = UserRegisterSerializer(data=userdata)
         if user_serializer.is_valid():
             user = user_serializer.save()
@@ -86,8 +86,10 @@ class RegistrationView(APIView):
                 about_me_serializer.is_valid(raise_exception=True)
                 about_me_serializer.save()
             else:
+                print(profile_serializer.errors)
                 return Response({'Status':profile_serializer.errors})
         else:
+            print(user_serializer.errors)
             return Response ({'Status':user_serializer.errors})
         return Response({"Status": "success"}, status=200)
     """eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1NzA3MjM5LCJpYXQiOjE2ODQxNzEyMzksImp0aSI6IjgwNDQzZDI1YTgzMTQ1ZTNiNTA5NmIyMjEzZmEzMGZmIiwidXNlcl9pZCI6MX0.WFpXV-_d7iJZQOu-kOrjGPFI5jitaL16R37XeJsCuhU"""
