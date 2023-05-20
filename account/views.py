@@ -66,7 +66,7 @@ class CompanyLoginView(APIView):
 class RegistrationView(APIView):     
     def post(self,request,format=None):
         data=request.data
-
+        image=request.files.get('image1')
         userdata = {'username':data.pop('username'),
                     'email':data.pop('email'),
                     'password':data.pop('password')}
@@ -77,7 +77,7 @@ class RegistrationView(APIView):
         user_serializer = UserRegisterSerializer(data=userdata)
         if user_serializer.is_valid():
             user = user_serializer.save()
-            
+            data['image'] = image
             data['user'] = user.id
             profile_serializer = ProfileSerializer(data = data)
             if profile_serializer.is_valid():
