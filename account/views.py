@@ -70,12 +70,14 @@ class RegistrationView(APIView):
         userdata = {'username':data.pop('username'),
                     'email':data.pop('email'),
                     'password':data.pop('password')}
-        first_name, last_name = data.pop('fullname').split('')
+        if data.get('fullname'):
+            first_name, last_name = data.get('fullname').split('')
+            data.update(first_name)
+            data.update(last_name)
         user_serializer = UserRegisterSerializer(data=userdata)
         if user_serializer.is_valid():
             user = user_serializer.save()
-            data.update(first_name)
-            data.update(last_name)
+            
             data['user'] = user.id
             profile_serializer = ProfileSerializer(data = data)
             if profile_serializer.is_valid():
