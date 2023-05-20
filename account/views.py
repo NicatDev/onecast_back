@@ -237,11 +237,13 @@ class TalentSettingEditView(APIView):
         return Response({'message':'success'},status=200)
             
 class CheckUsername(APIView):
-    def post(self):
+    def post(self,request):
         username = self.request.data.get('username')
         email = self.request.data.get('email')
-        if User.objects.filter(username=username).exists():
-            return Response({'message':'Bu username artiq istifade olunub'})
+        if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
+            return Response({'message':'Bu username ve email artiq istifade olunub'})
+        elif User.objects.filter(username=username).exists():
+            return Response({'message':'Bu username ile hesab movcuddur'})
         elif User.objects.filter(email=email).exists():
-            return Response({'message':'Bu emaille hesab movcuddur'})
+            return Response({'message':'Bu email ile hesab movcuddur'})
         return Response({'message':'okay'})
