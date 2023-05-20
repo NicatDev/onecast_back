@@ -241,10 +241,10 @@ class CheckUsername(APIView):
         username = self.request.data.get('username')
         email = self.request.data.get('email')
         if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
-            return Response({'message':'Bu username ve email artiq istifade olunub'},status=400)
+            return Response({"email":"false","username":"false"},status=400)
         elif User.objects.filter(username=username).exists():
-            return Response({'message':'Bu username ile hesab movcuddur'},status=400)
+            return Response({"email":"true","username":"false"},status=400)
         elif User.objects.filter(email=email).exists():
-            return Response({'message':'Bu email ile hesab movcuddur'},status=400)
+            return Response({"email":"false","username":"true"},status=400)
         
-        return Response({'message':'okay'},status=200)
+        return Response({"email":"true","username":"true"},status=200)
