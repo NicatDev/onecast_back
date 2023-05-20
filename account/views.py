@@ -23,7 +23,7 @@ class TalentLoginView(APIView):
         if Company.objects.filter(user=user.id):
             return Response({'Bu parametrlerde hesab movcud deyil'})
         if Profile.objects.filter(user=user.id):   
-            roles = 2000
+            roles = [2000]
             login(request, user)    
         
         refresh = RefreshToken.for_user(user)
@@ -45,7 +45,7 @@ class CompanyLoginView(APIView):
         if Profile.objects.filter(user=user.id):
             return Response({'Bu parametrlerde hesab movcud deyil'})
         if Company.objects.filter(user=user.id):   
-            roles = 2002 
+            roles = [2002] 
             login(request, user)
         
         
