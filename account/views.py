@@ -12,7 +12,7 @@ from castingapp.paginations import Custom9Pagination,Custom12Pagination
 User = get_user_model()
 
 # Create your views here.
-class LoginView(APIView):
+class TalentLoginView(APIView):
     # permission_classes = [IsCompanyLead]
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
@@ -20,18 +20,42 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
         if not user:
             return Response({"sifre ve ya username yanlisdir"})
-        login(request, user)
+        if Company.objects.filter(user=user.id):
+            return Response({'Bu parametrlerde hesab movcud deyil'})
+        if Profile.objects.filter(user=user.id):   
+            talent = True 
+            login(request, user)    
+        
+        refresh = RefreshToken.for_user(user)
+        tokens = {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token)
+        }
+        
+        return Response({"username": username, "tokens": tokens,"talent":talent}, status=201)
+
+class CompanyLoginView(APIView):
+    # permission_classes = [IsCompanyLead]
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if not user:
+            return Response({"sifre ve ya username yanlisdir"})
+        if Profile.objects.filter(user=user.id):
+            return Response({'Bu parametrlerde hesab movcud deyil'})
+        if Company.objects.filter(user=user.id):   
+            company = True 
+            login(request, user)
         
         
         refresh = RefreshToken.for_user(user)
         tokens = {
             "refresh": str(refresh),
             "access": str(refresh.access_token)
-            
         }
-        return Response({"username": username, "tokens": tokens,"userId":user.id}, status=201)
-
-
+        
+        return Response({"username": username, "tokens": tokens,"company":company}, status=201)
 
 class RegistrationView(APIView):     
     def post(self,request,format=None):
