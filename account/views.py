@@ -72,17 +72,21 @@ class RegistrationView(APIView):
                     'password':data.pop('password')}
         first_name, last_name = data.pop('fullname').split('')
         user_serializer = UserRegisterSerializer(data=userdata)
-        user_serializer.is_valid(raise_exception=True)
-        user = user_serializer.save()
-        data.update(first_name)
-        data.update(last_name)
-        data['user'] = user.id
-        profile_serializer = ProfileSerializer(data = data)
-        profile_serializer.is_valid(raise_exception=True)
-        profile = profile_serializer.save()
-        about_me_serializer = AboutMeForRegisterSerializer(data = {"profile":profile.id})
-        about_me_serializer.is_valid(raise_exception=True)
-        about_me_serializer.save()
+        if user_serializer.is_valid():
+            user = user_serializer.save()
+            data.update(first_name)
+            data.update(last_name)
+            data['user'] = user.id
+            profile_serializer = ProfileSerializer(data = data)
+            if profile_serializer.is_valid():
+                profile = profile_serializer.save()
+                about_me_serializer = AboutMeForRegisterSerializer(data = {"profile":profile.id})
+                about_me_serializer.is_valid(raise_exception=True)
+                about_me_serializer.save()
+            else:
+                return Response({'Status':profile_serializer.errors})
+        else:
+            return Response ({'Status':user_serializer.errors})
         return Response({"Status": "success"}, status=200)
     """eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1NzA3MjM5LCJpYXQiOjE2ODQxNzEyMzksImp0aSI6IjgwNDQzZDI1YTgzMTQ1ZTNiNTA5NmIyMjEzZmEzMGZmIiwidXNlcl9pZCI6MX0.WFpXV-_d7iJZQOu-kOrjGPFI5jitaL16R37XeJsCuhU"""
 
