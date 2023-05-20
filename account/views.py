@@ -20,11 +20,14 @@ class TalentLoginView(APIView):
         user = authenticate(username=username, password=password)
         if not user:
             return Response({"sifre ve ya username yanlisdir"})
+
         if Company.objects.filter(user=user.id):
-            return Response({'Bu parametrlerde hesab movcud deyil'})
-        if Profile.objects.filter(user=user.id):   
+            roles = [2002]
+        elif Profile.objects.filter(user=user.id):   
             roles = [2000]
-            login(request, user)    
+        else:
+            roles = [2023]
+        login(request, user)    
         
         refresh = RefreshToken.for_user(user)
         tokens = {
@@ -57,10 +60,13 @@ class CompanyLoginView(APIView):
         
         return Response({"username": username, "tokens": tokens,"roles":roles}, status=201)
 
+[{},{},{}]
+
+
 class RegistrationView(APIView):     
     def post(self,request,format=None):
         data=request.data
-        image=request.FILES
+
         userdata = {'username':data.pop('username'),
                     'email':data.pop('email'),
                     'password':data.pop('password')}
@@ -68,7 +74,6 @@ class RegistrationView(APIView):
         user_serializer = UserRegisterSerializer(data=userdata)
         user_serializer.is_valid(raise_exception=True)
         user = user_serializer.save()
-        data.update(image)
         data['user'] = user.id
         profile_serializer = ProfileSerializer(data = data)
         profile_serializer.is_valid(raise_exception=True)
