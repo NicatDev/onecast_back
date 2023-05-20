@@ -23,7 +23,7 @@ class TalentLoginView(APIView):
         if Company.objects.filter(user=user.id):
             return Response({'Bu parametrlerde hesab movcud deyil'})
         if Profile.objects.filter(user=user.id):   
-            talent = True 
+            roles = 2000
             login(request, user)    
         
         refresh = RefreshToken.for_user(user)
@@ -32,7 +32,7 @@ class TalentLoginView(APIView):
             "access": str(refresh.access_token)
         }
         
-        return Response({"username": username, "tokens": tokens,"talent":talent}, status=201)
+        return Response({"username": username, "tokens": tokens,"roles":roles}, status=201)
 
 class CompanyLoginView(APIView):
     # permission_classes = [IsCompanyLead]
@@ -45,7 +45,7 @@ class CompanyLoginView(APIView):
         if Profile.objects.filter(user=user.id):
             return Response({'Bu parametrlerde hesab movcud deyil'})
         if Company.objects.filter(user=user.id):   
-            company = True 
+            roles = 2002 
             login(request, user)
         
         
@@ -55,7 +55,7 @@ class CompanyLoginView(APIView):
             "access": str(refresh.access_token)
         }
         
-        return Response({"username": username, "tokens": tokens,"company":company}, status=201)
+        return Response({"username": username, "tokens": tokens,"roles":roles}, status=201)
 
 class RegistrationView(APIView):     
     def post(self,request,format=None):
