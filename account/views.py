@@ -236,7 +236,7 @@ class TalentSettingEditView(APIView):
                 userseria.save()
         return Response({'message':'success'},status=200)
             
-class CheckUsername(models.Model):
+class CheckUsername(APIView):
     def post(self):
         username = self.request.data.get('username')
         email = self.request.data.get('email')
