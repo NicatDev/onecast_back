@@ -65,13 +65,19 @@ class CompanyLoginView(APIView):
 
 class RegistrationView(APIView):     
     def post(self,request,format=None):
+
+
+        print(request.data)
+        print(request.data.get('username')[0])
         data=request.data
-        image=request.files.get('image1')
-        userdata = {'username':data.pop('username'),
-                    'email':data.pop('email'),
-                    'password':data.pop('password')}
+        image=request.FILES.pop('image1')
+        print(request.data.get('full_name'))
+        userdata = {'username':data.pop('username')[0],
+                    'email':data.pop('email')[0],
+                    'password':data.pop('password')[0]}
         if data.get('fullname'):
-            first_name, last_name = data.pop('fullname').split()
+            
+            first_name, last_name = data.pop('fullname')[0].split()
             data['first_name'] = first_name
             data['last_name'] = last_name
         user_serializer = UserRegisterSerializer(data=userdata)
@@ -87,10 +93,10 @@ class RegistrationView(APIView):
                 about_me_serializer.save()
             else:
                 print(profile_serializer.errors)
-                return Response({'Status':profile_serializer.errors})
+                return Response({'Status':profile_serializer.errors,'error':'profile'},status=400)
         else:
             print(user_serializer.errors)
-            return Response ({'Status':user_serializer.errors})
+            return Response ({'Status':user_serializer.errors,'error':'user'},status=401)
         return Response({"Status": "success"}, status=200)
     """eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1NzA3MjM5LCJpYXQiOjE2ODQxNzEyMzksImp0aSI6IjgwNDQzZDI1YTgzMTQ1ZTNiNTA5NmIyMjEzZmEzMGZmIiwidXNlcl9pZCI6MX0.WFpXV-_d7iJZQOu-kOrjGPFI5jitaL16R37XeJsCuhU"""
 
