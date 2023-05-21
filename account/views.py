@@ -200,39 +200,23 @@ class CompanyListView(generics.ListAPIView):
     
 #talentpagesettingeditview
 class TalentSettingEditView(APIView):
-    def put(self):
+    def put(self,request):
         user = self.request.user
-        
-        # if data.get('phone_number') == '':
-        #     del data['phone_number']
-        
-        if 'phone_number' in data:
-            if data.get('phone_number') != '':
-               number = data.pop('phone_number')
-               profile_id = data.pop('profile_id')
-               instance = Profile.objects.get(id = profile_id)
-               pserializer = ProfileSerializerForSettingEdit(instance,data = {'phone_number':number},partial=True)
-               pserializer.is_valid(raise_exception=True)
-               pserializer.save()
+
+        number = data.pop('phone_number')
+        profile_id = data.pop('profile_id')
+        instance = Profile.objects.get(id = profile_id)
+        pserializer = ProfileSerializerForSettingEdit(instance,data = {'phone_number':number},partial=True)
+        pserializer.is_valid(raise_exception=True)
+        pserializer.save()
                
-        if 'password' in data:
-            if data.get('password') != '':
-                password = data.pop('password')
-                user.set_password(password)
-                user.save()
-                
         data = self.request.data
         userinstance = self.request.user
-        if 'username' in data:
-            if data.get('username') != '':
-                userseria = UserSerializerForSettingEdit(userinstance,data={'username':data.get('username')},partial=True)
-                userseria.is_valid()
-                userseria.save()
-        if 'email' in data:
-            if data.get('email') != '':
-                userseria = UserSerializerForSettingEdit(userinstance,data={'email':data.get('email')},partial=True)
-                userseria.is_valid()
-                userseria.save()
+
+        userseria = UserSerializerForSettingEdit(userinstance,data=data,partial=True)
+        userseria.is_valid()
+        userseria.save()
+
         return Response({'message':'success'},status=200)
             
 class CheckUsername(APIView):
