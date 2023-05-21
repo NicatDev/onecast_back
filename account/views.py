@@ -140,10 +140,9 @@ class TalentSingleView(generics.RetrieveAPIView):
     
 #talentpageview
 class TalentPageView(APIView):
-    # filter_backends = (DjangoFilterBackend,)
-    # filterset_class = ProductFilter
-    # pagination_class = CustomPagination
-    def get(self):
+
+    def get(self,request):
+        
         queryset = Profile.objects.get(user = self.request.user.id)
         serializer = ProfileForSingleSerializer
         employee = serializer(queryset)
