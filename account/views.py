@@ -19,7 +19,7 @@ class TalentLoginView(APIView):
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if not user:
-            return Response({"sifre ve ya username yanlisdir"})
+            return Response({"sifre ve ya username yanlisdir"},status=400)
 
         if Company.objects.filter(user=user.id):
             roles = [2002]

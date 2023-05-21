@@ -24,8 +24,7 @@ urlpatterns = [
     path('TalentAllFilterPage/',TalentAllFilterPage.as_view(), name='TalentAllFilterPage'),
     path('TalentFilterPage/',TalentFilterPage.as_view(), name='TalentFilterPage'),
     path('CompanyListView/',CompanyListView.as_view(), name='CompanyListView'),
-    path('CheckUsername/',CheckUsername.as_view(), name='CheckUsername'),
-    
-]
+    path('CheckUsername/',CheckUsername.as_view(), name='CheckUsername'),  
+] 
 
 
