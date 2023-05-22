@@ -204,9 +204,11 @@ class TalentSettingEditView(APIView):
         user = self.request.user
 
         number = data.pop('phone_number')
+        first_name = data.pop('first_name')
+        last_name = data.pop('last_name')
         profile_id = data.pop('profile_id')
         instance = Profile.objects.get(id = profile_id)
-        pserializer = ProfileSerializerForSettingEdit(instance,data = {'phone_number':number},partial=True)
+        pserializer = ProfileSerializerForSettingEdit(instance,data = {'phone_number':number,'first_name':first_name,'last_name':last_name},partial=True)
         pserializer.is_valid(raise_exception=True)
         pserializer.save()
                
