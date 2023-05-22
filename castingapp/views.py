@@ -40,7 +40,7 @@ class ListFavView(generics.ListAPIView):
     serializer_class = FavouritesListSerializer
     permission_classes = [IsAuthenticated]
     
-    def get_queryset(self):
+    def get_queryset(self,request):
         user = self.request.user
         queryset = Favourites.objects.filter(user = user.id)
         return queryset
