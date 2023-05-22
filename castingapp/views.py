@@ -108,4 +108,4 @@ class MagazineSingleView(generics.RetrieveAPIView):
     
 class ContactView(generics.CreateAPIView):
     serializer_class = ContactUsSerializer
-    queryset = Contact_us
+    queryset = Contact_us.objects.all()
