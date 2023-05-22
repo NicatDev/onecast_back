@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-from account.views import TalentSettingEditView,CheckUsername,CompanyListView,TalentFilterPage,TalentAllFilterPage,TalentActorFilterPage,TalentChildFilterPage,TalentModelFilterPage,TalentPageView,CompanyLoginView,TalentLoginView,RegistrationView,CompanyRegisterView,HomePagePopularView,HomePageTalentsView,TalentSingleView
+from account.views import ChangePasswordVerifyView,TalentSettingEditView,CheckUsername,CompanyListView,TalentFilterPage,TalentAllFilterPage,TalentActorFilterPage,TalentChildFilterPage,TalentModelFilterPage,TalentPageView,CompanyLoginView,TalentLoginView,RegistrationView,CompanyRegisterView,HomePagePopularView,HomePageTalentsView,TalentSingleView
 
 from rest_framework_simplejwt import views as jwt_views
 app_name = "accounts-api"
@@ -31,6 +31,7 @@ urlpatterns = [
     path('CompanyListView/',CompanyListView.as_view(), name='CompanyListView'),
       
     path('TalentSettingEditView/',TalentSettingEditView.as_view(), name='TalentSettingEditView'),  
+    path('ChangePasswordVerifyView/<int:id>',ChangePasswordVerifyView.as_view(), name='ChangePasswordVerifyView'),  
     
 ] 
 

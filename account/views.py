@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
@@ -233,3 +233,17 @@ class CheckUsername(APIView):
             return Response({"email":"false","username":"true"},status=400)
         
         return Response({"email":"true","username":"true"},status=200)
+    
+    
+class ChangePasswordVerifyView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = ChangePasswordSerializer
+    lookup_field = "id"
+
+    def put(self, request, *args, **kwargs):
+        obj = self.get_object()
+        serializer = self.serializer_class(data=request.data,instance=obj)
+        
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({'Status':'Success'}, status=201)

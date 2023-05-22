@@ -92,8 +92,14 @@ class ActorCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ActorCategory
         fields = '__all__'
+        
+class UserSerializerUserPage(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
     
 class ProfileForSingleSerializer(serializers.ModelSerializer):
+    user = UserSerializerUserPage()
     actorCategory = ActorCategorySerializer(many=True)
     modelCategory = ModelCategorySerializer(many=True)
     about_me = AboutMeSerializer()
@@ -124,3 +130,32 @@ class CompanyListSerializer(serializers.ModelSerializer):
         model = Company
         fields = '__all__'
         
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('password',)
+        
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(style={"input_type":"password"})
+
+    expassword = serializers.CharField()
+    class Meta:
+        model = User
+        fields = ("expassword", "password")
+    def validate(self, attrs):
+        
+        
+        
+        expassword = attrs.get("expassword")
+
+        if expassword != self.password:
+            raise serializers.ValidationError({"Duzgun kod daxil edilmeyib"})
+       
+        return attrs
+
+    def update(self,instance,validated_data):
+        password = validated_data.pop('password')
+        instance.password_reset_code = None
+        instance.set_password(password)
+        instance.save()
+        return instance
