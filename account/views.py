@@ -278,7 +278,7 @@ class AboutMeEditView(APIView):
 class ProfileImageEdit(generics.UpdateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileImageSerializer
-    lookup_field = 1
+    lookup_field = 'id'
     
 
 class CategoryEditView(APIView):
