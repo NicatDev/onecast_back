@@ -100,6 +100,12 @@ class MagazinListView(generics.ListAPIView):
     def get_queryset(self):
         return News.objects.all().order_by('-created_at')
     
+class NotificationListView(generics.ListAPIView):
+    serializer_class = MagazineSerializer
+    
+    def get_queryset(self):
+        return News.objects.all().order_by('-created_at')[0:10]
+    
 class MagazineSingleView(generics.RetrieveAPIView):
     serializer_class = MagazineSerializer
     queryset = News.objects.all()

@@ -14,6 +14,7 @@ urlpatterns = [
     path('MagazinListView/',MagazinListView.as_view(), name='MagazinListView'),
     path('MagazineSingleView/<slug>',MagazineSingleView.as_view(), name='MagazineSingleView'),
     path('ContactView/',ContactView.as_view(), name='ContactView'),
+    path('NotificationListView/',NotificationListView.as_view(), name='NotificationListView'),
     
 ]
 

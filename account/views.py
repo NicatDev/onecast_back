@@ -316,7 +316,7 @@ class GetActiveOrNot(APIView):
     def put(self,request,*args,**kwargs):
         data = self.request.data
         id = data.get("id")
-        profile = Profile.objects.get(id= id)
+        profile = Profile.objects.get(id=id)
         profile.is_active = data.get("is_active")
         profile.save()
         return Response({"message":"success"},status=200)
