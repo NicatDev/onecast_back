@@ -88,19 +88,19 @@ class AboutMeSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
     def get_languages(self,obj):
-        languages =  obj.languages.all()
-        allang = Languages.objects.all()
-        names = []  
+
+        languages = obj.languages.all()
+        all_languages = Languages.objects.all()
         data = {}
-        for x in languages:
-            names.append(y.name)
-        for y in allang:
-            if y.name not in names:
-                data[y.name] = False
-            else:
-                data[y.name] = True
+
+        for language in all_languages:
+            data[language.name] = False
+
+        for language in languages:
+            data[language.name] = True
+
         return data
-    
+        
 class ModelCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelCategory
