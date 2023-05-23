@@ -4,11 +4,12 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import ProfileImageSerializer,About_me_edit_Serializer,ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
 from castingapp.paginations import Custom9Pagination,Custom12Pagination
+from django.contrib.auth.hashers import check_password
 User = get_user_model()
 
 # Create your views here.
@@ -91,7 +92,7 @@ class RegistrationView(APIView):
         else:
             print(user_serializer.errors)
             return Response ({'Status':user_serializer.errors,'error':'user'},status=401)
-        return Response({"Status": "success"}, status=200)
+        return Response({"Status": "success","id":profile.id}, status=200)
     """eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1NzA3MjM5LCJpYXQiOjE2ODQxNzEyMzksImp0aSI6IjgwNDQzZDI1YTgzMTQ1ZTNiNTA5NmIyMjEzZmEzMGZmIiwidXNlcl9pZCI6MX0.WFpXV-_d7iJZQOu-kOrjGPFI5jitaL16R37XeJsCuhU"""
 
 
@@ -239,11 +240,74 @@ class ChangePasswordVerifyView(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = ChangePasswordSerializer
     lookup_field = "id"
-
+            
+        
     def put(self, request, *args, **kwargs):
         obj = self.get_object()
         serializer = self.serializer_class(data=request.data,instance=obj)
         
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        if obj.check_password(serializer.validated_data['expassword']):
+                return Response({"error": "Parol doğru değil."}, status=400)
+        serializer.save()
         return Response({'Status':'Success'}, status=201)
+    
+class AboutMeEditView(APIView):
+    queryset = About_me.objects.all()
+    
+    def put(self,request,*args,**kwargs):
+        data = self.request.data
+        instance = About_me.objects.get(id = data.pop("id"))
+        languages = []
+        for x in data.pop('languages'):
+            item = Languages.objects.get(name=x)
+            languages.append(item)
+        about_me_serializer = About_me_edit_Serializer(instance,data,partial=True)
+        about_me_serializer.is_valid(raise_exception=True)
+        
+        my_about_me = about_me_serializer.save()
+        
+
+
+        my_about_me.language.set(languages)
+        my_about_me.save()
+        return Response({"message":"success"},status=200)
+        
+# {"content":"1","facebook":"1","linkedn":"1","instagram":"1","languages":["Tr","Eng","Rus"],"id":1}
+
+class ProfileImageEdit(generics.UpdateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileImageSerializer
+    lookup_field = 1
+    
+
+class CategoryEditView(APIView):
+    queryset = Profile.objects.all()
+    
+    def put(self,request,*args,**kwargs):
+        data = self.request.data
+        instance = Profile.objects.get(id = data.pop("id"))
+        actor_cat = []
+        model_cat = []
+        for x in data.pop('model_cat'):
+            item = ModelCategory.objects.get(name=x)
+            model_cat.append(item)
+        for x in data.pop('actor_cat'):
+            item = ActorCategory.objects.get(name=x)
+            actor_cat.append(item)
+
+        instance.modelCategory.set(model_cat)
+        instance.actorCategory.set(actor_cat)
+        instance.save()
+        return Response({"message":"success"},status=200)
+    
+# {"id":1,"actor_cat":["Bas rol"],"model_cat":["Top models","Face models"]}
+
+class GetPremiumOrBasic(APIView):
+    def put(self,request,*args,**kwargs):
+        data = self.request.data
+        id = data.get("id")
+        profile = Profile.objects.get(id= id)
+        profile.is_premium = data.get("is_premium")
+        profile.save()
+        return Response({"message":"success"},status=200)

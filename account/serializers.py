@@ -89,7 +89,7 @@ class AboutMeSerializer(serializers.ModelSerializer):
         
     def get_languages(self,obj):
 
-        languages = obj.languages.all()
+        languages = obj.language.all()
         all_languages = Languages.objects.all()
         data = {}
 
@@ -160,16 +160,7 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("expassword", "password")
-    def validate(self, attrs):
-        
-        
-        
-        expassword = attrs.get("expassword")
 
-        if expassword != self.password:
-            raise serializers.ValidationError({"Duzgun kod daxil edilmeyib"})
-       
-        return attrs
 
     def update(self,instance,validated_data):
         password = validated_data.pop('password')
@@ -177,3 +168,13 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.set_password(password)
         instance.save()
         return instance
+    
+class About_me_edit_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = About_me
+        fields = ('content','language','instagram','facebook','linkedn','id')
+   
+class ProfileImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = About_me
+        fields = ("image1","image2","image3",'id')
