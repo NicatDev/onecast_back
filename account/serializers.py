@@ -178,3 +178,13 @@ class ProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = About_me
         fields = ("image1","image2","image3",'id')
+        
+class ActorCategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActorCategory
+        fields = '__all__'
+        
+class ModelCategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModelCategory
+        fields = '__all__'
