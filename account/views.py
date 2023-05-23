@@ -312,6 +312,24 @@ class GetPremiumOrBasic(APIView):
         profile.save()
         return Response({"message":"success"},status=200)
     
+class GetActiveOrNot(APIView):
+    def put(self,request,*args,**kwargs):
+        data = self.request.data
+        id = data.get("id")
+        profile = Profile.objects.get(id= id)
+        profile.is_active = data.get("is_active")
+        profile.save()
+        return Response({"message":"success"},status=200)
+    
+class GetVisibleOrNot(APIView):
+    def put(self,request,*args,**kwargs):
+        data = self.request.data
+        id = data.get("id")
+        profile = Profile.objects.get(id= id)
+        profile.is_visible = data.get("is_visible")
+        profile.save()
+        return Response({"message":"success"},status=200)
+    
 class ActorCategoryList(generics.ListAPIView):
     queryset = ActorCategory.objects.all()
     serializer_class = ActorCategoryListSerializer
