@@ -201,8 +201,8 @@ class CompanyListView(generics.ListAPIView):
 #talentpagesettingeditview
 class TalentSettingEditView(APIView):
     def put(self,request):
-        user = self.request.user
-
+        # user = self.request.user
+        data=request.data
         number = data.pop('phone_number')
         first_name = data.pop('first_name')
         last_name = data.pop('last_name')
@@ -212,8 +212,8 @@ class TalentSettingEditView(APIView):
         pserializer.is_valid(raise_exception=True)
         pserializer.save()
                
-        data = self.request.data
-        userinstance = self.request.user
+
+        userinstance = request.user
 
         userseria = UserSerializerForSettingEdit(userinstance,data=data,partial=True)
         userseria.is_valid()
