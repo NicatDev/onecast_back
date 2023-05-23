@@ -118,7 +118,7 @@ class ProfileForFilterPageSerializer(serializers.ModelSerializer):
 class UserSerializerForSettingEdit(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email')
+        fields = ('email',)
 
 class ProfileSerializerForSettingEdit(serializers.ModelSerializer):
     class Meta:
