@@ -176,9 +176,10 @@ class About_me_edit_Serializer(serializers.ModelSerializer):
    
 class ProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = About_me
+        model = Profile
         fields = ("image1","image2","image3",'id')
-        
+       
+
 class ActorCategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActorCategory
