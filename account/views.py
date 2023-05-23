@@ -60,7 +60,7 @@ class CompanyLoginView(APIView):
         
         return Response({"username": username, "tokens": tokens,"roles":roles}, status=201)
 
-[{},{},{}]
+
 
 
 class RegistrationView(APIView):     

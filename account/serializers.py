@@ -73,16 +73,34 @@ class PopularSerializer(serializers.ModelSerializer):
 
         
 class LanguageSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Languages
         fields = '__all__'
+    
+    
         
 class AboutMeSerializer(serializers.ModelSerializer):
     language = LanguageSerializer(many=True)
+    languages = serializers.SerializerMethodField()
     class Meta:
         model = About_me
         fields = '__all__'
         
+    def get_languages(self,obj):
+        languages =  obj.languages.all()
+        allang = Languages.objects.all()
+        names = []  
+        data = {}
+        for x in languages:
+            names.append(y.name)
+        for y in allang:
+            if y.name not in names:
+                data[y.name] = False
+            else:
+                data[y.name] = True
+        return data
+    
 class ModelCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelCategory
