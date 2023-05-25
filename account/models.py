@@ -83,7 +83,7 @@ class ActorCategory(models.Model):
         return self.name
     
 class ProductionCategory(models.Model):
-    name = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    name = models.CharField(max_length=50, choices=PRODUCTION_CHOICES)
 
     def __str__(self):
         return self.name
