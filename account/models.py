@@ -148,6 +148,7 @@ class Company(BaseMixin):
     phone_number = models.CharField(max_length=20)
     about_company = models.TextField(null=True,blank=True)
     image = models.ImageField(upload_to='media/company',null=True,blank=True)
+    category = models.ManyToManyField('ProductionCategory',related_name='companies',blank=True)
     
     class Meta:
         ordering = ['-created_at']

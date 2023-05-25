@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import ModelCategoryListSerializer,ActorCategoryListSerializer,ProfileImageSerializer,About_me_edit_Serializer,ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import CompanySerializerForEdit,CompanySerializerForSettingEdit,ModelCategoryListSerializer,ActorCategoryListSerializer,ProfileImageSerializer,About_me_edit_Serializer,ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
@@ -337,3 +337,42 @@ class ActorCategoryList(generics.ListAPIView):
 class ModelCategoryList(generics.ListAPIView):
     queryset = ModelCategory.objects.all()
     serializer_class = ModelCategoryListSerializer
+    
+    
+class CompanySettingsEditView(APIView):
+    def put(self,request):
+        # user = self.request.user
+        data=request.data
+        number = data.pop('phone_number')
+        first_name = data.pop('first_name')
+        last_name = data.pop('last_name')
+        profile_id = data.pop('profile_id')
+        instance = Company.objects.get(id = profile_id)
+        pserializer = CompanySerializerForSettingEdit(instance,data = {'phone_number':number,'first_name':first_name,'last_name':last_name},partial=True)
+        pserializer.is_valid(raise_exception=True)
+        pserializer.save()
+               
+        userinstance = request.user
+        userseria = UserSerializerForSettingEdit(userinstance,data=data,partial=True)
+        userseria.is_valid()
+        userseria.save()
+
+        return Response({'message':'success'},status=200)
+    
+class CompanyCategoryEditView(APIView):
+    queryset = Profile.objects.all()
+    
+    def put(self,request,*args,**kwargs):
+        data2 = self.request.data
+        data = data2.pop('categories')
+        instance = Company.objects.get(id = data.pop("id"))
+        actor_cat = []
+        for x in data.pop('actor_cat'):
+            item = ProductionCategory.objects.get(name=x)
+            actor_cat.append(item)
+        instance.category.set(actor_cat)
+        instance.save()
+        serializer = CompanySerializerForEdit(instance,data2,partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message":"success"},status=200)

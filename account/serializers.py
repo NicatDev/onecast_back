@@ -143,6 +143,16 @@ class ProfileSerializerForSettingEdit(serializers.ModelSerializer):
         model = Profile
         fields = ('phone_number','first_name','last_name')
         
+class CompanySerializerForSettingEdit(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ('phone_number','first_name','last_name')
+        
+class CompanySerializerForEdit(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ('company_name','company_website')
+        
 class CompanyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
