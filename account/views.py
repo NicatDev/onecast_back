@@ -247,7 +247,7 @@ class ChangePasswordVerifyView(generics.UpdateAPIView):
         serializer = self.serializer_class(data=request.data,instance=obj)
         
         serializer.is_valid(raise_exception=True)
-        if obj.check_password(serializer.validated_data['expassword']):
+        if not obj.check_password(serializer.validated_data['expassword']):
                 return Response({"error": "Parol doğru değil."}, status=400)
         serializer.save()
         return Response({'Status':'Success'}, status=201)
