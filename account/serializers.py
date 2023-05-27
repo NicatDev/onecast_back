@@ -174,7 +174,6 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     def update(self,instance,validated_data):
         password = validated_data.pop('password')
-        instance.password_reset_code = None
         instance.set_password(password)
         instance.save()
         return instance
