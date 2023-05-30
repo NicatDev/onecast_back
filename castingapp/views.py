@@ -49,7 +49,7 @@ class ListFavView(generics.ListAPIView):
     
     def get_queryset(self,request):
         user = self.request.user
-        queryset = Favourites.objects.filter(user = user.id)
+        queryset = Favourites.objects.filter(user = user)
         return queryset
     
 class DeleteFromFav(generics.DestroyAPIView):
@@ -101,9 +101,9 @@ class DeleteFromCard(generics.DestroyAPIView):
         instance.delete()
         
 class SentedListView(generics.ListAPIView):
-    serializer_class = SentCardSerializer
+    serializer_class = CardItemSerializer
     def get_queryset(self):
-        return SentCard.objects.filter()
+        return CardItem.objects.filter(card__user = self.request.user)
         
 #Magazinepage
 class MagazinListView(generics.ListAPIView):
