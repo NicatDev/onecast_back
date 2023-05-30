@@ -41,7 +41,7 @@ class AddFavView(generics.CreateAPIView):
 class ListFavView(generics.ListAPIView):
     serializer_class = FavouritesListSerializer
     
-    def get_queryset(self,request):
+    def get_queryset(self):
         user = self.request.user
         queryset = Favourites.objects.filter(user = user)
         return queryset
