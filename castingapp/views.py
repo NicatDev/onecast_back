@@ -45,7 +45,7 @@ class AddFavView(generics.CreateAPIView):
     
 class ListFavView(generics.ListAPIView):
     serializer_class = FavouritesListSerializer
-    permission_classes = [IsAuthenticated]
+
     
     def get_queryset(self,request):
         user = self.request.user
@@ -55,7 +55,7 @@ class ListFavView(generics.ListAPIView):
 class DeleteFromFav(generics.DestroyAPIView):
     queryset = Favourites.objects.all()
     serializer_class = FavouritesDeleteSerializer
-    permission_classes = [IsAuthenticated]
+
 
     def perform_destroy(self, instance):
         instance.delete()
@@ -95,10 +95,15 @@ class AddSentedView(generics.CreateAPIView):
 class DeleteFromCard(generics.DestroyAPIView):
     queryset = CardItem.objects.all()
     serializer_class = CardItemSerializer
-    permission_classes = [IsAuthenticated]
+
 
     def perform_destroy(self, instance):
         instance.delete()
+        
+class SentedListView(generics.ListAPIView):
+    serializer_class = SentCardSerializer
+    def get_queryset(self):
+        return SentCard.objects.filter()
         
 #Magazinepage
 class MagazinListView(generics.ListAPIView):
