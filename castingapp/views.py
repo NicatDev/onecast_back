@@ -86,7 +86,7 @@ class AddSentedView(generics.CreateAPIView):
             card = cardserializer.save()
         else:
             card = SentCard.objects.get(user=user.id)
-        data['card'] = card.id
+        data['card'] = card
         talent = data.get('talent')
         if CardItem.objects.filter(card__user=self.request.user, talent=talent).exists():
             return Response(status=400)
