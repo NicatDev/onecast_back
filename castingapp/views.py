@@ -76,20 +76,25 @@ class DeleteFromFav(generics.DestroyAPIView):
 
 #sentbyyou
 class AddSentedView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
+
     def post(self):
         user = self.request.user
         data = self.request.data
-        if not SentCard.objects.filter(user=user.id).exists():
+        if not SentCard.objects.filter(user=user).exists():
             cardserializer = SentCardSerializer({'user':user.id})
             cardserializer.is_valid(raise_exception=True)
             card = cardserializer.save()
         else:
             card = SentCard.objects.get(user=user.id)
         data['card'] = card.id
+        talent = data.get('talent')
+        if CardItem.objects.filter(card__user=self.request.user, talent=talent).exists():
+            return Response(status=400)
+            
         carditemserializer = CardItemSerializer(data=data)
         carditemserializer.is_valid(raise_exception=True)
         carditemserializer.save()
+        
         return Response({"message":'success'},status=201)
 
 #url with id
