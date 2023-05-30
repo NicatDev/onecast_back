@@ -35,12 +35,7 @@ class AddFavView(generics.CreateAPIView):
     serializer_class = FavouritesAddSerializer
     
     def perform_create(self, serializer):
-        talent = serializer.data.get('talent')
-        if Favourites.objects.filter(user=self.request.user, talent=talent).exists():
-            raise serializers.ValidationError(
-                'Model object already exists with the specified users.'
-            )
-
+        
         return serializer.save(user=self.request.user)
     
 class ListFavView(generics.ListAPIView):
