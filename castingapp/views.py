@@ -75,21 +75,27 @@ class DeleteFromFav(generics.DestroyAPIView):
 #     talent = models.ForeignKey(Profile,on_delete=models.CASCADE)
 
 #sentbyyou
-class AddSentedView(generics.CreateAPIView):
+from rest_framework.views import APIView
+class AddSentedView(APIView):
 
-    def post(self):
+    def post(self,request):
+        print('2')
         user = self.request.user
         data = self.request.data
+        print('1')
+        
         if not SentCard.objects.filter(user=user).exists():
-            cardserializer = SentCardSerializer({'user':user.id})
+            cardserializer = SentCardSerializer(data={'user':user.id})
             cardserializer.is_valid(raise_exception=True)
             card = cardserializer.save()
         else:
             card = SentCard.objects.get(user=user.id)
-        data['card'] = card
+        print('2')
+        data['card'] = card.id
+        
         talent = data.get('talent')
         if CardItem.objects.filter(card__user=self.request.user, talent=talent).exists():
-            return Response(status=400)
+            return Response({"Already exists"},status=400)
             
         carditemserializer = CardItemSerializer(data=data)
         carditemserializer.is_valid(raise_exception=True)

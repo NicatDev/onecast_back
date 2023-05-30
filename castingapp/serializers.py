@@ -36,7 +36,7 @@ class SentCardSerializer(serializers.ModelSerializer):
     
 # 1addsentedview 2deletefromcardview
 class CardItemSerializer(serializers.ModelSerializer):
-    sentcard = SentCardSerializer()
+
     
     class Meta:
         model = CardItem
