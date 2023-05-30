@@ -38,7 +38,7 @@ class AddFavView(generics.CreateAPIView):
         
     def perform_create(self, serializer):
         
-        talent = serializer.data.get('talent')
+        talent = serializer.validated_data.get('talent')
         
         if Favourites.objects.filter(user=self.request.user, talent=talent).exists():
   
