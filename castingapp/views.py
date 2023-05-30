@@ -33,10 +33,16 @@ class HomePagePartnersView(generics.ListAPIView):
 class AddFavView(generics.CreateAPIView):
     # permission_classes = [IsAuthenticated]
     serializer_class = FavouritesAddSerializer
-    
+    queryset = Favourites.objects.all()
+
+        
     def perform_create(self, serializer):
-
-
+        
+        talent = serializer.data.get('talent')
+        
+        if Favourites.objects.filter(user=self.request.user, talent=talent).exists():
+  
+            raise serializers.ValidationError("Favourite already exists for this user and talent")
         return serializer.save(user=self.request.user)
     
 class ListFavView(generics.ListAPIView):
