@@ -33,9 +33,9 @@ class HomePagePartnersView(generics.ListAPIView):
 class AddFavView(generics.CreateAPIView):
     # permission_classes = [IsAuthenticated]
     serializer_class = FavouritesAddSerializer
-
+    
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user.id)
+        return serializer.save(user=self.request.user)
     
 class ListFavView(generics.ListAPIView):
     serializer_class = FavouritesListSerializer
