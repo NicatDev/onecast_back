@@ -113,7 +113,7 @@ class DeleteFromCard(generics.DestroyAPIView):
         instance.delete()
         
 class SentedListView(generics.ListAPIView):
-    serializer_class = CardItemSerializer
+    serializer_class = CardItemForSentedSerializer
     def get_queryset(self):
         return CardItem.objects.filter(card__user = self.request.user)
         

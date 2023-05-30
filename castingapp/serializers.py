@@ -42,6 +42,12 @@ class CardItemSerializer(serializers.ModelSerializer):
         model = CardItem
         fields = '__all__'
         
+class CardItemForSentedSerializer(serializers.ModelSerializer):
+    talent = ProfileSerializer()
+    class Meta:
+        model = CardItem
+        fields = '__all__'
+        
 #ContactUs
 
 
