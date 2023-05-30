@@ -26,3 +26,14 @@ class ProductFilter(django_filters.FilterSet):
         fields = ['age', "gender", "height",'is_actor','is_model','is_child']
          
 #deyis
+
+class MagazineFilter(django_filters.FilterSet):
+    # category__id = django_filters.CharFilter(lookup_expr='iexact')
+    # category__name = django_filters.CharFilter(lookup_expr='icontains')
+    # name = django_filters.CharFilter(lookup_expr='icontains')
+    # description = django_filters.CharFilter(lookup_expr='icontains')
+    title = django_filters.CharFilter(lookup_expr='icontains')
+                                                       
+    class Meta:
+        model = Profile
+        fields = ['title', "content"]

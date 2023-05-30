@@ -10,6 +10,7 @@ from rest_framework import filters
 from rest_framework.pagination import LimitOffsetPagination
 from castingapp.paginations import *
 from .serializers import *
+from .filters import MagazineFilter
 
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
@@ -96,9 +97,19 @@ class DeleteFromCard(generics.DestroyAPIView):
 #Magazinepage
 class MagazinListView(generics.ListAPIView):
     serializer_class = MagazineSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = MagazineFilter
     
     def get_queryset(self):
         return News.objects.all().order_by('-created_at')
+    
+class MagazinListViewDesc(generics.ListAPIView):
+    serializer_class = MagazineSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = MagazineFilter
+    
+    def get_queryset(self):
+        return News.objects.all().order_by('created_at')
     
 class NotificationListView(generics.ListAPIView):
     serializer_class = MagazineSerializer

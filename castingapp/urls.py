@@ -12,6 +12,7 @@ urlpatterns = [
     path('AddSentedView/',AddSentedView.as_view(), name='AddSentedView'),
     path('DeleteFromCard/<int:id>',DeleteFromCard.as_view(), name='DeleteFromCard'),
     path('MagazinListView/',MagazinListView.as_view(), name='MagazinListView'),
+    path('MagazinListViewDesc/',MagazinListViewDesc.as_view(), name='MagazinListView'),
     path('MagazineSingleView/<slug>',MagazineSingleView.as_view(), name='MagazineSingleView'),
     path('ContactView/',ContactView.as_view(), name='ContactView'),
     path('NotificationListView/',NotificationListView.as_view(), name='NotificationListView'),

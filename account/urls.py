@@ -6,7 +6,7 @@ from account.views import CompanyPageView,CompanySettingsEditView,GetVisibleOrNo
 
 from rest_framework_simplejwt import views as jwt_views
 app_name = "accounts-api"
-
+# ssh root@65.109.227.187
 urlpatterns = [
     #auth
     path("login/talent/", TalentLoginView.as_view(), name="login"),
