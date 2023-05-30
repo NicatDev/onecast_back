@@ -1,5 +1,6 @@
 import django_filters
 from account.models import Profile
+from castingapp.models import News
 
 class CustomNumericRangeFilter(django_filters.Filter):
     def filter(self, qs, value):
@@ -35,5 +36,5 @@ class MagazineFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(lookup_expr='icontains')
                                                        
     class Meta:
-        model = Profile
+        model = News
         fields = ['title']
