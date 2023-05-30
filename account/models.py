@@ -65,25 +65,25 @@ class BaseMixin(models.Model):
         abstract = True
 
 class Languages(models.Model):
-    name = models.CharField(max_length=30,choices=LANGUAGE_CHOICES)
+    name = models.CharField(max_length=30)
     
     def __str__(self):
         return self.name
     
 class ModelCategory(models.Model):
-    name = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
 class ActorCategory(models.Model):
-    name = models.CharField(max_length=50, choices=ACTOR_CHOICES)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
     
 class ProductionCategory(models.Model):
-    name = models.CharField(max_length=50, choices=PRODUCTION_CHOICES,blank=True)
+    name = models.CharField(max_length=50,blank=True)
 
     def __str__(self):
         return self.name
@@ -95,8 +95,8 @@ class Profile(BaseMixin):
     phone_number = models.CharField(max_length=20)
     eyecolor = models.CharField(max_length=14)
     weight = models.PositiveSmallIntegerField()
-    gender = models.CharField(max_length=10,choices=GENDER_CHOICES)
-    haircolor = models.CharField(max_length=14,choices=HAIR_COLOR)
+    gender = models.CharField(max_length=10)
+    haircolor = models.CharField(max_length=14)
     height = models.SmallIntegerField()
     education = models.TextField()
     age = models.PositiveIntegerField(null=True,blank=True)

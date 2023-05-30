@@ -29,7 +29,7 @@ urlpatterns = [
     path('TalentAllFilterPage/',TalentAllFilterPage.as_view(), name='TalentAllFilterPage'),
     path('TalentFilterPage/',TalentFilterPage.as_view(), name='TalentFilterPage'),
     path('CompanyListView/',CompanyListView.as_view(), name='CompanyListView'),
-      
+    
     path('TalentSettingEditView/',TalentSettingEditView.as_view(), name='TalentSettingEditView'),  
     path('ChangePasswordVerifyView/<int:id>',ChangePasswordVerifyView.as_view(), name='ChangePasswordVerifyView'),  
     path('AboutMeEditView/',AboutMeEditView.as_view(), name='AboutMeEditView'),  

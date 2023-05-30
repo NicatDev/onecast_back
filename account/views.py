@@ -47,7 +47,7 @@ class CompanyLoginView(APIView):
         if not user:
             return Response({"sifre ve ya username yanlisdir"})
         if Profile.objects.filter(user=user.id):
-            return Response({'Bu parametrlerde hesab movcud deyil'})
+            return Response({'Bu parametrlerde hesab movcud deyil'},status=400)
         if Company.objects.filter(user=user.id):   
             roles = [2002] 
             login(request, user)
