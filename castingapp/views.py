@@ -56,7 +56,7 @@ class ListFavView(generics.ListAPIView):
 class DeleteFromFav(generics.DestroyAPIView):
     queryset = Favourites.objects.all()
     serializer_class = FavouritesDeleteSerializer
-
+    lookup_field = 'id'
 
     def perform_destroy(self, instance):
         instance.delete()
@@ -107,7 +107,7 @@ class AddSentedView(APIView):
 class DeleteFromCard(generics.DestroyAPIView):
     queryset = CardItem.objects.all()
     serializer_class = CardItemSerializer
-
+    lookup_field = 'id'
 
     def perform_destroy(self, instance):
         instance.delete()
