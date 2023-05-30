@@ -16,11 +16,15 @@ class FavouritesAddSerializer(serializers.ModelSerializer):
         model = Favourites
         exclude = ('user',)
         
-    # def create(self, validated_data):
-    #     user = self.request.user
-    #     instance = Favourites.objects.create(user=user.id, **validated_data)
-    #     return instance
-    
+    def validate(self,attrs):
+        user = attrs.get('user')
+        talent = attrs.get('talent')
+  
+        if Favourites.objects.filter(user=user, talent=talent).exists():
+            
+            raise serializers.ValidationError("Favourite already exists for this user and talent")
+
+        return attrs    
 class FavouritesListSerializer(serializers.ModelSerializer):
     talent = ProfileSerializer()
     class Meta:
