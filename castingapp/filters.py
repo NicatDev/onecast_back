@@ -36,4 +36,4 @@ class MagazineFilter(django_filters.FilterSet):
                                                        
     class Meta:
         model = Profile
-        fields = ['title', "content"]
+        fields = ['title']
