@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import CompanySerializerForEdit,CompanySerializerForSettingEdit,ModelCategoryListSerializer,ActorCategoryListSerializer,ProfileImageSerializer,About_me_edit_Serializer,ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import CompanyForSingleSerializer,CompanySerializerForEdit,CompanySerializerForSettingEdit,ModelCategoryListSerializer,ActorCategoryListSerializer,ProfileImageSerializer,About_me_edit_Serializer,ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
@@ -148,6 +148,17 @@ class TalentPageView(APIView):
         serializer = ProfileForSingleSerializer
         employee = serializer(queryset)
         return Response(employee.data)
+
+
+class CompanyPageView(APIView):
+
+    def get(self,request):
+        
+        queryset = Company.objects.get(user = self.request.user.id)
+        serializer = CompanyForSingleSerializer
+        employee = serializer(queryset)
+        return Response(employee.data)    
+
     
 class TalentModelFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer

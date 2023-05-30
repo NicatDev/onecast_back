@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-from account.views import CompanySettingsEditView,GetVisibleOrNot,GetActiveOrNot,ModelCategoryList,ActorCategoryList,GetPremiumOrBasic,CategoryEditView,ProfileImageEdit,AboutMeEditView,ChangePasswordVerifyView,TalentSettingEditView,CheckUsername,CompanyListView,TalentFilterPage,TalentAllFilterPage,TalentActorFilterPage,TalentChildFilterPage,TalentModelFilterPage,TalentPageView,CompanyLoginView,TalentLoginView,RegistrationView,CompanyRegisterView,HomePagePopularView,HomePageTalentsView,TalentSingleView
+from account.views import CompanyPageView,CompanySettingsEditView,GetVisibleOrNot,GetActiveOrNot,ModelCategoryList,ActorCategoryList,GetPremiumOrBasic,CategoryEditView,ProfileImageEdit,AboutMeEditView,ChangePasswordVerifyView,TalentSettingEditView,CheckUsername,CompanyListView,TalentFilterPage,TalentAllFilterPage,TalentActorFilterPage,TalentChildFilterPage,TalentModelFilterPage,TalentPageView,CompanyLoginView,TalentLoginView,RegistrationView,CompanyRegisterView,HomePagePopularView,HomePageTalentsView,TalentSingleView
 
 from rest_framework_simplejwt import views as jwt_views
 app_name = "accounts-api"
@@ -22,6 +22,7 @@ urlpatterns = [
     #singlepage
     path('TalentSingleView/<int:id>',TalentSingleView.as_view(), name='TalentSingleView'),
     path('TalentPageView/',TalentPageView.as_view(), name='TalentPageView'),
+    path('CompanyPageView/',CompanyPageView.as_view(), name='TalentPageView'),
     #talentcompanypage
     path('TalentModelFilterPage/',TalentModelFilterPage.as_view(), name='TalentModelFilterPage'),
     path('TalentActorFilterPage/',TalentActorFilterPage.as_view(), name='TalentActorFilterPage'),

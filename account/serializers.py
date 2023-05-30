@@ -126,6 +126,13 @@ class ProfileForSingleSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
         
+class CompanyForSingleSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Company
+        fields = '__all__'
+        
 class ProfileForFilterPageSerializer(serializers.ModelSerializer):
  
     class Meta:
