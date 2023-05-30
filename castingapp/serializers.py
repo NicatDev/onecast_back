@@ -14,7 +14,7 @@ class PartnersSerializer(serializers.ModelSerializer):
 class FavouritesAddSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favourites
-        fields = '__all__'
+        exclude = ('user',)
         
     # def create(self, validated_data):
     #     user = self.request.user
