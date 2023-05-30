@@ -40,11 +40,10 @@ class AddFavView(generics.CreateAPIView):
     
 class ListFavView(generics.ListAPIView):
     serializer_class = FavouritesListSerializer
-
     
     def get_queryset(self,request):
         user = self.request.user
-        queryset = Favourites.objects.filter(user = user)
+        queryset = Favourites.objects.filter(user = user.id)
         return queryset
     
 class DeleteFromFav(generics.DestroyAPIView):
