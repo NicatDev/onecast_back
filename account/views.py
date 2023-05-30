@@ -23,7 +23,7 @@ class TalentLoginView(APIView):
             return Response({"sifre ve ya username yanlisdir"},status=400)
 
         if Company.objects.filter(user=user.id):
-            roles = [2002]
+            return Response({'Bu parametrlerde hesab movcud deyil'},status=401)
         elif Profile.objects.filter(user=user.id):   
             roles = [2000]
         else:
@@ -45,9 +45,9 @@ class CompanyLoginView(APIView):
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if not user:
-            return Response({"sifre ve ya username yanlisdir"})
+            return Response({"sifre ve ya username yanlisdir"},status=400)
         if Profile.objects.filter(user=user.id):
-            return Response({'Bu parametrlerde hesab movcud deyil'},status=400)
+            return Response({'Bu parametrlerde hesab movcud deyil'},status=401)
         if Company.objects.filter(user=user.id):   
             roles = [2002] 
             login(request, user)
