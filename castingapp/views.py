@@ -43,7 +43,7 @@ class ListFavView(generics.ListAPIView):
     
     def get_queryset(self,request):
         user = self.request.user
-        queryset = Favourites.objects.filter(user = user.id)
+        queryset = Favourites.objects.filter(user = user)
         return queryset
     
 class DeleteFromFav(generics.DestroyAPIView):
