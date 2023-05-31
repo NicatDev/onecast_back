@@ -127,7 +127,7 @@ class ProfileForSingleSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class CompanyForSingleSerializer(serializers.ModelSerializer):
-
+    user = UserSerializerUserPage()
 
     class Meta:
         model = Company
