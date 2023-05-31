@@ -376,13 +376,15 @@ class CompanyCategoryEditView(APIView):
     def put(self,request,*args,**kwargs):
         data2 = self.request.data
         data = data2.pop('categories')
-        instance = Company.objects.get(id = data.pop("id"))
+        instance = Company.objects.get(id = data2.pop("id"))
 
 
-        items = ProductionCategory.objects.filter(name=data)
-
+        items = ProductionCategory.objects.filter(name__in=data)
+        print(items)
         instance.category.set(items)
+        print(instance)
         instance.save()
+        print(instance)
         serializer = CompanySerializerForEdit(instance,data2,partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
