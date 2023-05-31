@@ -143,7 +143,7 @@ class ProfileForFilterPageSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Profile
-        fields = ('image1','first_name','last_name','is_actor','is_model','is_child','is_premium') 
+        fields = ('image1','first_name','last_name','is_actor','is_model','is_child','is_premium','id') 
     
 #endofsingleview
 class UserSerializerForSettingEdit(serializers.ModelSerializer):
