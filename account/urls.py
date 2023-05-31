@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-from account.views import CompanyPageView,CompanySettingsEditView,GetVisibleOrNot,GetActiveOrNot,ModelCategoryList,ActorCategoryList,GetPremiumOrBasic,CategoryEditView,ProfileImageEdit,AboutMeEditView,ChangePasswordVerifyView,TalentSettingEditView,CheckUsername,CompanyListView,TalentFilterPage,TalentAllFilterPage,TalentActorFilterPage,TalentChildFilterPage,TalentModelFilterPage,TalentPageView,CompanyLoginView,TalentLoginView,RegistrationView,CompanyRegisterView,HomePagePopularView,HomePageTalentsView,TalentSingleView
+from account.views import CompanyCategoryEditView,CompanyPageView,CompanySettingsEditView,GetVisibleOrNot,GetActiveOrNot,ModelCategoryList,ActorCategoryList,GetPremiumOrBasic,CategoryEditView,ProfileImageEdit,AboutMeEditView,ChangePasswordVerifyView,TalentSettingEditView,CheckUsername,CompanyListView,TalentFilterPage,TalentAllFilterPage,TalentActorFilterPage,TalentChildFilterPage,TalentModelFilterPage,TalentPageView,CompanyLoginView,TalentLoginView,RegistrationView,CompanyRegisterView,HomePagePopularView,HomePageTalentsView,TalentSingleView
 
 from rest_framework_simplejwt import views as jwt_views
 app_name = "accounts-api"
@@ -43,6 +43,7 @@ urlpatterns = [
     path('GetActiveOrNot/',GetActiveOrNot.as_view(), name='GetActiveOrNot'),  
     path('GetVisibleOrNot/',GetVisibleOrNot.as_view(), name='GetVisibleOrNot'),  
     path('CompanySettingsEditView/',CompanySettingsEditView.as_view(), name='CompanySettingsEditView'),  
+    path('CompanyCategoryEditView/',CompanyCategoryEditView.as_view(), name='CompanyCategoryEditView'),  
     
 ] 
 
