@@ -126,9 +126,15 @@ class ProfileForSingleSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
         
+        
+class CompanyCategory(serializers.ModelSerializer):
+    class Meta:
+        model = ProductionCategory
+        fields = '__all__'
+
 class CompanyForSingleSerializer(serializers.ModelSerializer):
     user = UserSerializerUserPage()
-
+    category = CompanyCategory(many=True)
     class Meta:
         model = Company
         fields = '__all__'
