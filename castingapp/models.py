@@ -116,7 +116,7 @@ class OneNewsCover(models.Model):
     image = models.ImageField()
     
     class Meta:
-        ordering = ['-created_at']
+
         verbose_name = 'Bizim Xeber Reklam'
         verbose_name_plural = 'Bizim xeber Reklamlar'
     
