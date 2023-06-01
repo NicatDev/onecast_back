@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from castingapp.models import News,Partners,Favourites,SentCard,CardItem,Contact_us
+from castingapp.models import OneNewsCover,OneNews,News,Partners,Favourites,SentCard,CardItem,Contact_us,Notification
 from account.serializers import ProfileSerializer
 class MagazineSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,3 +55,18 @@ class ContactUsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact_us
         fields = '__all__'
+        
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'
+        
+class OneNewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OneNews
+        fields = '__all__'
+ 
+class OneNewsCoverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OneNewsCover
+        fields = '__all__'       

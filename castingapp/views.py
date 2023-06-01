@@ -149,3 +149,50 @@ class MagazineSingleView(generics.RetrieveAPIView):
 class ContactView(generics.CreateAPIView):
     serializer_class = ContactUsSerializer
     queryset = Contact_us.objects.all()
+    
+class NotificationForNoneUsers(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    queryset = Notification.objects.all()
+    
+    def get_queryset(self):
+        return Notification.objects.filter(for_none_users=True)[0:10]
+    
+class NotificationForModel(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    
+    def get_queryset(self):
+        return Notification.objects.filter(for_model=True)[0:10]
+    
+class NotificationForActor(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    
+    def get_queryset(self):
+        return Notification.objects.filter(for_actor=True)[0:10]
+
+class NotificationForCompany(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    
+    def get_queryset(self):
+        return Notification.objects.filter(for_company=True)[0:10]
+    
+class NotificationForChild(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    
+    def get_queryset(self):
+        return Notification.objects.filter(for_child=True)[0:10]
+    
+class OneNewsView(generics.ListAPIView):
+    pagination_class = Custom6Pagination
+    serializer_class = OneNewsSerializer
+    queryset = OneNews.objects.all()
+    
+class OneNewsCover(generics.ListAPIView):
+    serializer_class = OneNewsCoverSerializer
+    
+    def get_queryset(self):
+        return OneNewsCover.objects.all()[0:3]
+    
+class OneNewsView(generics.RetrieveAPIView):
+    serializer_class = OneNewsSerializer
+    queryset = OneNews.objects.all()
+    lookup_field = 'slug'
