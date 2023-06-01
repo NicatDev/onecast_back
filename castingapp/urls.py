@@ -17,6 +17,13 @@ urlpatterns = [
     path('ContactView/',ContactView.as_view(), name='ContactView'),
     path('NotificationListView/',NotificationListView.as_view(), name='NotificationListView'),
     path('SentedListView/',SentedListView.as_view(), name='SentedListView'),
+    path('OneNewsView/<slug>',OneNewsView.as_view(), name='OneNewsView'),
+    path('OneNewsCover/',OneNewsCover.as_view(), name='OneNewsCover'),
+    path('OneNewsView/',OneNewsView.as_view(), name='OneNewsView'),
+    path('NotificationForChild/',NotificationForChild.as_view(), name='NotificationForChild'),
+    path('NotificationForCompany/',NotificationForCompany.as_view(), name='NotificationForCompany'),
+    path('NotificationForActor/',NotificationForActor.as_view(), name='NotificationForActor'),
+    path('NotificationForModel/',NotificationForModel.as_view(), name='NotificationForModel'),
 ]
 
 
