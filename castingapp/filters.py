@@ -16,7 +16,7 @@ class ProductFilter(django_filters.FilterSet):
     # category__name = django_filters.CharFilter(lookup_expr='icontains')
     # name = django_filters.CharFilter(lookup_expr='icontains')
     # description = django_filters.CharFilter(lookup_expr='icontains')
-    full_name = django_filters.CharFilter(field_name='first_name__last_name', lookup_expr='icontains')
+    full_name = django_filters.CharFilter(method='filter_full_name')
     is_child = django_filters.BooleanFilter()
     is_actor = django_filters.BooleanFilter()
     is_model = django_filters.BooleanFilter()
@@ -27,6 +27,9 @@ class ProductFilter(django_filters.FilterSet):
     class Meta:
         model = Profile
         fields = ['age', "gender", "height",'is_actor','is_model','is_child','full_name']
+        
+    def filter_full_name(self, queryset, name, value):
+        return queryset.filter(first_name__icontains=value) | queryset.filter(last_name__icontains=value)
          
 #deyis
 
