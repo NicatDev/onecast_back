@@ -110,6 +110,12 @@ class OneNews(BaseMixin):
     def __str__(self):
         return self.title
     
+    def save(self, *args, **kvargs):
+        if not self.slug:
+            self.slug = create_slug_shortcode(self,size=12, model_ = News)
+
+        super(News, self).save(*args, **kvargs)
+    
 class OneNewsCover(models.Model):
     title = models.CharField(max_length=40)
     content = models.TextField(null=True,blank=True)
@@ -140,4 +146,10 @@ class Notification(BaseMixin):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kvargs):
+        if not self.slug:
+            self.slug = create_slug_shortcode(self,size=12, model_ = News)
+
+        super(News, self).save(*args, **kvargs)
     

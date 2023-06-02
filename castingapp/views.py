@@ -10,7 +10,7 @@ from rest_framework import filters
 from rest_framework.pagination import LimitOffsetPagination
 from castingapp.paginations import *
 from .serializers import *
-from .filters import MagazineFilter
+from .filters import MagazineFilter,NotificationFilter
 
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
@@ -150,36 +150,16 @@ class ContactView(generics.CreateAPIView):
     serializer_class = ContactUsSerializer
     queryset = Contact_us.objects.all()
     
-class NotificationForNoneUsers(generics.ListAPIView):
+class NotificationFilter(generics.ListAPIView):
     serializer_class = NotificationSerializer
     queryset = Notification.objects.all()
+    ffilter_backends = (DjangoFilterBackend,)
+    filterset_class = NotificationFilter
     
     def get_queryset(self):
-        return Notification.objects.filter(for_none_users=True)[0:10]
+        return Notification.objects.all()[0:10]
     
-class NotificationForModel(generics.ListAPIView):
-    serializer_class = NotificationSerializer
-    
-    def get_queryset(self):
-        return Notification.objects.filter(for_model=True)[0:10]
-    
-class NotificationForActor(generics.ListAPIView):
-    serializer_class = NotificationSerializer
-    
-    def get_queryset(self):
-        return Notification.objects.filter(for_actor=True)[0:10]
 
-class NotificationForCompany(generics.ListAPIView):
-    serializer_class = NotificationSerializer
-    
-    def get_queryset(self):
-        return Notification.objects.filter(for_company=True)[0:10]
-    
-class NotificationForChild(generics.ListAPIView):
-    serializer_class = NotificationSerializer
-    
-    def get_queryset(self):
-        return Notification.objects.filter(for_child=True)[0:10]
     
 class OneNewsView(generics.ListAPIView):
     pagination_class = Custom6Pagination
@@ -192,7 +172,7 @@ class OneNewsCover(generics.ListAPIView):
     def get_queryset(self):
         return OneNewsCover.objects.all()[0:3]
     
-class OneNewsView(generics.RetrieveAPIView):
+class OneNewsSingleView(generics.RetrieveAPIView):
     serializer_class = OneNewsSerializer
     queryset = OneNews.objects.all()
     lookup_field = 'slug'
