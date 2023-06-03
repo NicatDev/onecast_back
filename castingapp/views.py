@@ -11,7 +11,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from castingapp.paginations import *
 from .serializers import *
 from .filters import MagazineFilter,NotificationFilter
-
+from rest_framework.views import APIView
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 
@@ -60,7 +60,22 @@ class DeleteFromFav(generics.DestroyAPIView):
 
     def perform_destroy(self, instance):
         instance.delete()
-    
+ 
+class DeleteFromFavWithTalentId(APIView):
+    def post(self,request):
+        talent_id = self.request.data.get('talent_id')
+        user = self.request.user
+        print(user)
+        try:
+            fav = Favourites.objects.get(user=user,talent=talent_id)
+        except:
+            fav = '1'
+        if fav != '1':
+            fav.delete()
+        else:
+            return Response({"message":"Not exists"},status=200)
+
+        return Response({"message":"Sucess"},status=204)
 #End Fav
 # class SentCard(models.Model):
 #     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='cards')
