@@ -390,3 +390,9 @@ class CompanyCategoryEditView(APIView):
         serializer.save()
         return Response({"message":"success"},status=200)
     
+class EditCompanyImageView(generics.UpdateAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanyImageSerializer
+    lookup_field = 'id'
+
+    

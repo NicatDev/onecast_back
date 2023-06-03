@@ -201,6 +201,10 @@ class ProfileImageSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ("image1","image2","image3",'id')
        
+class CompanyImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ("image",'id')
 
 class ActorCategoryListSerializer(serializers.ModelSerializer):
     class Meta:
