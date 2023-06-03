@@ -44,7 +44,7 @@ urlpatterns = [
     path('GetVisibleOrNot/',GetVisibleOrNot.as_view(), name='GetVisibleOrNot'),  
     path('CompanySettingsEditView/',CompanySettingsEditView.as_view(), name='CompanySettingsEditView'),  
     path('CompanyCategoryEditView/',CompanyCategoryEditView.as_view(), name='CompanyCategoryEditView'),  
-    path('EditCompanyImageView',EditCompanyImageView.as_view(), name='EditCompanyImageView' )
+    path('EditCompanyImageView/<int:id>',EditCompanyImageView.as_view(), name='EditCompanyImageView' )
 ] 
 
 
