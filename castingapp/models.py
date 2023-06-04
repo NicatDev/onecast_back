@@ -163,8 +163,8 @@ class ConfirmHistory(BaseMixin):
     
     class Meta:
         ordering = ['-created_at']
-        verbose_name = 'Company muracietleri'
-        verbose_name_plural = 'Bildirisler'
+        verbose_name = 'Company muracieti'
+        verbose_name_plural = 'Company muracietleri'
     
     def __str__(self):
         return self.company.company_name
