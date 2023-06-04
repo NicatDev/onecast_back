@@ -191,3 +191,19 @@ class OneNewsSingleView(generics.RetrieveAPIView):
     serializer_class = OneNewsSerializer
     queryset = OneNews.objects.all()
     lookup_field = 'slug'
+    
+class ConfirmView(APIView):
+    def post(self,request):
+        cards = CardItem.objects.filter(card__user = self.request.user)
+        company = Company.objects.get(user = self.request.user)
+        talents = ''
+        for x in cards:
+            talents = talents + x.talent.first_name + ' ' + x.talent.last_name + ',' + ' '
+        confirm = ConfirmSerializer(data = {'company':company.id,'talents':talents})
+        confirm.is_valid(raise_exception=True)
+        confirm.save()
+        return Response(status=201)
+        
+        
+            
+        

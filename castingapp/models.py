@@ -153,3 +153,19 @@ class Notification(BaseMixin):
 
         super(News, self).save(*args, **kvargs)
     
+
+    
+class ConfirmHistory(BaseMixin):
+    company = models.OneToOneField(Company,on_delete=models.SET_NULL,null=True,blank=True)
+    talents = models.TextField(null=True,blank=True)
+    accepted = models.BooleanField(default = False)
+    rejected = models.BooleanField(default = False)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Company muracietleri'
+        verbose_name_plural = 'Bildirisler'
+    
+    def __str__(self):
+        return self.company.company_name
+    

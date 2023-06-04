@@ -126,7 +126,7 @@ class Profile(BaseMixin):
 class About_me(models.Model):
     profile = models.OneToOneField(Profile,on_delete=models.CASCADE,related_name='about_me')
     content = models.TextField(null=True,blank=True)
-    language = models.ManyToManyField('Languages',related_name='languages')
+    language = models.ManyToManyField('Languages',related_name='languages',blank=True)
     instagram = models.CharField(max_length=100,null=True,blank=True)
     facebook = models.CharField(max_length=100,null=True,blank=True)
     linkedn = models.CharField(max_length=100,null=True,blank=True)
@@ -164,3 +164,5 @@ class Popular(models.Model):
     
     def __str__(self):
         return self.profile.first_name + '' + self.profile.last_name
+    
+    
