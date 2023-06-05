@@ -12,6 +12,20 @@ from castingapp.paginations import Custom9Pagination,Custom12Pagination
 from django.contrib.auth.hashers import check_password
 User = get_user_model()
 
+class CheckLogin(APIView):
+    def post(self, request):
+        try:
+            user = self.request.user
+            if User.objects.filter(id = user.id).exists():
+                print(user,'200')
+                return Response(status=200)
+            else:
+                return Response(status=201)
+        except:
+            print(user,'400')
+            return Response(status=400)
+        return Response(status=401)
+
 # Create your views here.
 class TalentLoginView(APIView):
     # permission_classes = [IsCompanyLead]
