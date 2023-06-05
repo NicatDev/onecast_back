@@ -284,9 +284,10 @@ class AboutMeEditView(APIView):
         data = self.request.data
         instance = About_me.objects.get(id = data.pop("id"))
         languages = []
-        for x in data.pop('languages'):
-            item = Languages.objects.get(name=x)
-            languages.append(item)
+        for key, value in data.pop('languages').items():
+            if value:
+                item = Languages.objects.get(name=key)
+                languages.append(item)
         about_me_serializer = About_me_edit_Serializer(instance,data,partial=True)
         about_me_serializer.is_valid(raise_exception=True)
         
