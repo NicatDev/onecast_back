@@ -20,7 +20,7 @@ class CheckLogin(APIView):
                 print(user,'200')
                 return Response(status=200)
             else:
-                return Response(status=201)
+                return Response(status=400)
         except:
             print(user,'400')
             return Response(status=400)
