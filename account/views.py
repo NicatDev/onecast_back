@@ -135,7 +135,7 @@ class HomePageTalentsView(generics.ListAPIView):
         queryset = Profile.objects.filter(is_premium = True)[0:12]
         if queryset.count()<12:
             count = 12-queryset.count()
-            queryset2 = Profile.objects.all().order_by('-created_at')
+            queryset2 = Profile.objects.filter(is_active = True, is_visible=True, is_premium=True).order_by('-created_at')
             combinedqueryset = queryset | queryset2[0:count]
             return combinedqueryset
         return queryset

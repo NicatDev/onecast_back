@@ -149,9 +149,9 @@ class Notification(BaseMixin):
     
     def save(self, *args, **kvargs):
         if not self.slug:
-            self.slug = create_slug_shortcode(self,size=12, model_ = News)
+            self.slug = create_slug_shortcode(self,size=12, model_ = Notification)
 
-        super(News, self).save(*args, **kvargs)
+        super(Notification, self).save(*args, **kvargs)
     
 
     
