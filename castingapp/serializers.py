@@ -71,8 +71,6 @@ class OneNewsCoverSerializer(serializers.ModelSerializer):
         model = OneNewsCover
         fields = '__all__'       
 
-
-
 class ConfirmSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConfirmHistory

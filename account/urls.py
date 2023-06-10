@@ -46,7 +46,6 @@ urlpatterns = [
     path('CompanyCategoryEditView/',CompanyCategoryEditView.as_view(), name='CompanyCategoryEditView'),  
     path('EditCompanyImageView/<int:id>',EditCompanyImageView.as_view(), name='EditCompanyImageView' ),
     path('CheckLogin/',CheckLogin.as_view(), name='CheckLogin' ),
-    
 ] 
 
 

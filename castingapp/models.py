@@ -112,9 +112,9 @@ class OneNews(BaseMixin):
     
     def save(self, *args, **kvargs):
         if not self.slug:
-            self.slug = create_slug_shortcode(self,size=12, model_ = News)
+            self.slug = create_slug_shortcode(self,size=12, model_ = OneNews)
 
-        super(News, self).save(*args, **kvargs)
+        super(OneNews, self).save(*args, **kvargs)
     
 class OneNewsCover(models.Model):
     title = models.CharField(max_length=40)
