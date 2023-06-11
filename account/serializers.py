@@ -55,7 +55,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('phone_number',)
+        fields = ('phone_number','user')
         
 
 class ProfileForHomaPageTalentSerializer(serializers.ModelSerializer):

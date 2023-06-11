@@ -127,6 +127,8 @@ class CompanyRegisterView(APIView):
             print(user_serializer.errors)
             return Response(status=400)
         print(data)
+        print(user)
+        print(user.id)
         data['user'] = user.id
         profile_serializer = CompanySerializer(data = data)
         print('222')
