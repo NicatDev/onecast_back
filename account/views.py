@@ -114,15 +114,22 @@ class CompanyRegisterView(APIView):
     def post(self,request,format=None):
         data=request.data
 
-        userdata = {'username':data.pop('username')[0],
-                    'email':data.pop('email')[0],
-                    'password':data.pop('password')[0]}
+        userdata = {'username':data.pop('username'),
+                    'email':data.pop('email'),
+                    'password':data.pop('password')}
 
         user_serializer = UserRegisterSerializer(data=userdata)
-        user_serializer.is_valid(raise_exception=True)
-        user = user_serializer.save()
+        
+        if user_serializer.is_valid():
+
+            user = user_serializer.save()
+        else:
+            print(user_serializer.errors)
+            return Response(status=400)
+        print(data)
         data['user'] = user.id
         profile_serializer = CompanySerializer(data = data)
+        print('222')
         profile_serializer.is_valid(raise_exception=True)
         profile_serializer.save()
         
