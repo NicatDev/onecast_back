@@ -165,13 +165,27 @@ class ContactView(generics.CreateAPIView):
     serializer_class = ContactUsSerializer
     queryset = Contact_us.objects.all()
     
-class NotificationFilter(generics.ListAPIView):
+class NotificationView(generics.ListAPIView):
     serializer_class = NotificationSerializer
     queryset = Notification.objects.all()
 
     
-    def get_queryset(self):
-        return Notification.objects.all()[0:10]
+    def get_queryset(self,request):
+        queryset = Notification.objects.all()[0:10]
+        user = request.user
+        com = Company.objects.filter(user=user).exists()
+        tal = Company.objects.filter(user=user).exists()
+        if com:
+            queryset = Notification.objects.filter(company=Company.objects.get(user=user)) | Notification.objects.filter(for_company = True)[0:10]
+        elif tal:
+            talent = Profile.objects.get(user=user)
+            if talent.is_model==True:
+                queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_model = True)[0:10]
+            elif talent.is_actor==True:
+                queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_actor = True)[0:10]
+        else:
+            queryset = Notification.objects.filter(for_none_users = True)[0:10]
+        return queryset
     
 
     
