@@ -168,8 +168,7 @@ class ContactView(generics.CreateAPIView):
 class NotificationFilter(generics.ListAPIView):
     serializer_class = NotificationSerializer
     queryset = Notification.objects.all()
-    ffilter_backends = (DjangoFilterBackend,)
-    filterset_class = NotificationFilter
+
     
     def get_queryset(self):
         return Notification.objects.all()[0:10]

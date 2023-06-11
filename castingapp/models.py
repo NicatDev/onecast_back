@@ -133,6 +133,7 @@ class Notification(BaseMixin):
     news = models.ForeignKey(OneNews,on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=70)
     content = models.TextField()
+    image = models.ImageField()
     for_model = models.BooleanField(default=False)
     for_actor = models.BooleanField(default=False)
     for_company = models.BooleanField(default=False)
