@@ -173,19 +173,26 @@ class NotificationView(generics.ListAPIView):
     def get_queryset(self):
         queryset = []
         user = self.request.user
+        print('baslangic')
         if user.is_authenticated:
-
+            print('uservar')
             com = Company.objects.filter(user=user).exists()
-            tal = Company.objects.filter(user=user).exists()
+            tal = Profile.objects.filter(user=user).exists()
+            print(com,tal)
             if com:
+                print('company')
                 queryset = Notification.objects.filter(company=Company.objects.get(user=user)) | Notification.objects.filter(for_company = True)[0:10]
             elif tal:
+                print('talent var')
                 talent = Profile.objects.get(user=user)
                 if talent.is_model==True:
+                    print('talent modeldi')
                     queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_model = True)[0:10]
                 elif talent.is_actor==True:
+                    print('talent actordu')
                     queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_actor = True)[0:10]
             else:
+                print('else hali')
                 queryset = Notification.objects.filter(for_none_users = True)[0:10]
         return queryset
     

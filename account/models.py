@@ -141,9 +141,9 @@ class About_me(models.Model):
                
 class Company(BaseMixin):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    company_name = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=20,null=True,blank=True)
+    last_name = models.CharField(max_length=20,null=True,blank=True)
+    company_name = models.CharField(max_length=20,null=True,blank=True)
     company_website = models.CharField(max_length=30,null=True,blank=True)
     phone_number = models.CharField(max_length=20)
     about_company = models.TextField(null=True,blank=True)
