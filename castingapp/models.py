@@ -133,7 +133,8 @@ class Notification(BaseMixin):
 
     title = models.CharField(max_length=70)
     content = models.TextField()
-
+    talant = models.OneToOneField(Profile,on_delete=models.CASCADE,null=True,blank=True)
+    company = models.OneToOneField(Company,on_delete=models.CASCADE,null=True,blank=True)
     for_model = models.BooleanField(default=False)
     for_actor = models.BooleanField(default=False)
     for_company = models.BooleanField(default=False)
