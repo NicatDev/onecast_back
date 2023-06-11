@@ -130,7 +130,7 @@ class OneNewsCover(models.Model):
         return self.title
     
 class Notification(BaseMixin):
-    news = models.ForeignKey(OneNews,on_delete=models.CASCADE,null=True,blank=True)
+
     title = models.CharField(max_length=70)
     content = models.TextField()
 
