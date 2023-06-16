@@ -22,6 +22,7 @@ urlpatterns = [
     path('OneNewsView/',OneNewsView.as_view(), name='OneNewsView'),
     path('DeleteFromFavWithTalentId/',DeleteFromFavWithTalentId.as_view(), name='DeleteFromFavWithTalentId'),
     path('NotificationView/',NotificationView.as_view(), name='NotificationView'),
+    path('ConfirmView/',ConfirmView.as_view(), name='ConfirmView'),
     
 ]
 
