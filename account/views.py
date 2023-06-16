@@ -144,7 +144,7 @@ class HomePageTalentsView(generics.ListAPIView):
         queryset = Profile.objects.filter(is_premium = True)[0:12]
         if queryset.count()<12:
             count = 12-queryset.count()
-            queryset2 = Profile.objects.filter(is_active = True, is_visible=True, is_premium=True).order_by('-created_at')
+            queryset2 = Profile.objects.filter(is_active = True, is_premium=True).order_by('-created_at')
             combinedqueryset = queryset | queryset2[0:count]
             return combinedqueryset
         return queryset
@@ -190,7 +190,7 @@ class TalentModelFilterPage(generics.ListAPIView):
     pagination_class = Custom9Pagination
     
     def get_queryset(self):
-        return Profile.objects.filter(is_active=True,is_visible=True,is_model=True)
+        return Profile.objects.filter(is_active=True,is_model=True)
 
 class TalentChildFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
@@ -199,7 +199,7 @@ class TalentChildFilterPage(generics.ListAPIView):
     pagination_class = Custom9Pagination
     
     def get_queryset(self):
-        return Profile.objects.filter(is_active=True,is_visible=True,is_child=True)
+        return Profile.objects.filter(is_active=True,is_child=True)
 
 class TalentActorFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
@@ -208,7 +208,7 @@ class TalentActorFilterPage(generics.ListAPIView):
     pagination_class = Custom9Pagination
     
     def get_queryset(self):
-        return Profile.objects.filter(is_active=True,is_visible=True,is_actor=True)
+        return Profile.objects.filter(is_active=True,is_actor=True)
     
 class TalentAllFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
@@ -217,7 +217,7 @@ class TalentAllFilterPage(generics.ListAPIView):
     pagination_class = Custom12Pagination
     
     def get_queryset(self):
-        return Profile.objects.filter(is_active=True,is_visible=True)
+        return Profile.objects.filter(is_active=True)
 
 class TalentFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
@@ -226,7 +226,7 @@ class TalentFilterPage(generics.ListAPIView):
     pagination_class = Custom9Pagination
     
     def get_queryset(self):
-        return Profile.objects.filter(is_active=True,is_visible=True)
+        return Profile.objects.filter(is_active=True)
     
 class CompanyListView(generics.ListAPIView):
     serializer_class = CompanyListSerializer 
