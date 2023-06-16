@@ -217,7 +217,7 @@ class TalentAllFilterPage(generics.ListAPIView):
     pagination_class = Custom12Pagination
     
     def get_queryset(self):
-        return Profile.objects.filter(is_active=True)
+        return Profile.objects.filter(is_active=True,is_premium=True)
 
 class TalentFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
@@ -226,7 +226,7 @@ class TalentFilterPage(generics.ListAPIView):
     pagination_class = Custom9Pagination
     
     def get_queryset(self):
-        return Profile.objects.filter(is_active=True)
+        return Profile.objects.filter(is_active=True).order_by('-is_premium')
     
 class CompanyListView(generics.ListAPIView):
     serializer_class = CompanyListSerializer 

@@ -23,7 +23,7 @@ class ProductFilter(django_filters.FilterSet):
     is_child = django_filters.BooleanFilter()
     is_actor = django_filters.BooleanFilter()
     is_model = django_filters.BooleanFilter()
-    gender = django_filters.CharFilter(lookup_expr='icontains')
+    gender = django_filters.CharFilter(lookup_expr='contains')
      
     height = django_filters.RangeFilter()                 
     
