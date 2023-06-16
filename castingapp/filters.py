@@ -24,25 +24,27 @@ class ProductFilter(django_filters.FilterSet):
     is_actor = django_filters.BooleanFilter()
     is_model = django_filters.BooleanFilter()
     gender = django_filters.CharFilter(lookup_expr='icontains')
-        
+    age = django_filters.RangeFilter()        
     height = django_filters.RangeFilter()                 
     
     min_age = django_filters.NumberFilter(method='filter_by_min_age')
     max_age = django_filters.NumberFilter(method='filter_by_max_age')
 
-    def filter_by_min_age(self, queryset,value):
+    def filter_by_min_age(self, queryset, name, value):
         today = datetime.date.today()
         birth_date = today - datetime.timedelta(days=(int(value) * 365))
+
         return queryset.filter(birthday__lte=birth_date)
 
-    def filter_by_max_age(self, queryset, value):
+    def filter_by_max_age(self, queryset, name, value):
         today = datetime.date.today()
         birth_date = today - datetime.timedelta(days=(int(value) * 365))
+
         return queryset.filter(birthday__gte=birth_date)
                                             
     class Meta:
         model = Profile
-        fields = [ "gender", "height",'is_actor','is_model','is_child','full_name','min_age','max_age']
+        fields = ['age', "gender", "height",'is_actor','is_model','is_child','full_name','min_age','max_age']
         
     def filter_full_name(self, queryset, name, value):
         return queryset.filter(first_name__icontains=value) | queryset.filter(last_name__icontains=value)
