@@ -1,6 +1,7 @@
 import django_filters
 from account.models import Profile
 from castingapp.models import News,Notification
+import datetime
 
 class CustomNumericRangeFilter(django_filters.Filter):
     def filter(self, qs, value):
@@ -10,6 +11,8 @@ class CustomNumericRangeFilter(django_filters.Filter):
                 min_value, max_value = value_parts
                 return super().filter(qs, django_filters.fields.Lookup((min_value, max_value), 'range'))
         return super().filter(qs, value)
+    
+
     
 class ProductFilter(django_filters.FilterSet):
     # category__id = django_filters.CharFilter(lookup_expr='iexact')
@@ -23,10 +26,23 @@ class ProductFilter(django_filters.FilterSet):
     gender = django_filters.CharFilter(lookup_expr='icontains')
     age = django_filters.RangeFilter()        
     height = django_filters.RangeFilter()                 
+    
+    min_age = django_filters.NumberFilter(method='filter_by_min_age')
+    max_age = django_filters.NumberFilter(method='filter_by_max_age')
+
+    def filter_by_min_age(self, queryset,value):
+        today = datetime.date.today()
+        birth_date = today - datetime.timedelta(days=(int(value) * 365))
+        return queryset.filter(birthday__lte=birth_date)
+
+    def filter_by_max_age(self, queryset, value):
+        today = datetime.date.today()
+        birth_date = today - datetime.timedelta(days=(int(value) * 365))
+        return queryset.filter(birthday__gte=birth_date)
                                             
     class Meta:
         model = Profile
-        fields = ['age', "gender", "height",'is_actor','is_model','is_child','full_name']
+        fields = ['age', "gender", "height",'is_actor','is_model','is_child','full_name','min_age','max_age']
         
     def filter_full_name(self, queryset, name, value):
         return queryset.filter(first_name__icontains=value) | queryset.filter(last_name__icontains=value)
