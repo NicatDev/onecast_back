@@ -212,8 +212,6 @@ class TalentActorFilterPage(generics.ListAPIView):
     
 class TalentAllFilterPage(generics.ListAPIView):
     serializer_class = ProfileForFilterPageSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ProductFilter
     pagination_class = Custom12Pagination
     
     def get_queryset(self):
