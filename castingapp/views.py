@@ -180,16 +180,16 @@ class NotificationView(generics.ListAPIView):
             tal = Profile.objects.filter(user=user).exists()
             print(com,tal)
             if com:
-                print('company')
+            
                 queryset = Notification.objects.filter(company=Company.objects.get(user=user)) | Notification.objects.filter(for_company = True)[0:10]
             elif tal:
-                print('talent var')
+             
                 talent = Profile.objects.get(user=user)
-                if talent.is_model==True:
-                    print('talent modeldi')
+                if talent.is_child == True:
+                    queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_child = True)[0:10]
+                elif talent.is_model==True: 
                     queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_model = True)[0:10]
                 elif talent.is_actor==True:
-                    print('talent actordu')
                     queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_actor = True)[0:10]
             else:
                 print('else hali')
@@ -213,7 +213,7 @@ class OneNewsSingleView(generics.RetrieveAPIView):
     serializer_class = OneNewsSerializer
     queryset = OneNews.objects.all()
     lookup_field = 'slug'
-    
+        
 class ConfirmView(APIView):
     def post(self,request):
         cards = CardItem.objects.filter(card__user = self.request.user)

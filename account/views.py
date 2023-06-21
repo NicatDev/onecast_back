@@ -126,9 +126,7 @@ class CompanyRegisterView(APIView):
         else:
             print(user_serializer.errors)
             return Response(status=400)
-        print(data)
-        print(user)
-        print(user.id)
+       
         data['user'] = user.id
         profile_serializer = CompanySerializer(data = data)
         print('222')
@@ -383,8 +381,7 @@ class CompanySettingsEditView(APIView):
         instance = Company.objects.get(id = profile_id)
         pserializer = CompanySerializerForSettingEdit(instance,data = {'phone_number':number,'first_name':first_name,'last_name':last_name},partial=True)
         pserializer.is_valid(raise_exception=True)
-        pserializer.save()
-               
+        pserializer.save()     
         userinstance = request.user
         userseria = UserSerializerForSettingEdit(userinstance,data=data,partial=True)
         userseria.is_valid()
@@ -399,14 +396,9 @@ class CompanyCategoryEditView(APIView):
         data2 = self.request.data
         data = data2.pop('categories')
         instance = Company.objects.get(id = data2.pop("id"))
-
-
         items = ProductionCategory.objects.filter(name__in=data)
-        print(items)
         instance.category.set(items)
-        print(instance)
         instance.save()
-        print(instance)
         serializer = CompanySerializerForEdit(instance,data2,partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
