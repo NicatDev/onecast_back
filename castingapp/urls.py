@@ -23,6 +23,7 @@ urlpatterns = [
     path('DeleteFromFavWithTalentId/',DeleteFromFavWithTalentId.as_view(), name='DeleteFromFavWithTalentId'),
     path('NotificationView/',NotificationView.as_view(), name='NotificationView'),
     path('ConfirmView/',ConfirmView.as_view(), name='ConfirmView'),
+    path('HomePageImageView/',HomePageImageView.as_view(), name='HomePageImageView'),
 ]
 
 

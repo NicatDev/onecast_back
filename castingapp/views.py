@@ -225,6 +225,8 @@ class ConfirmView(APIView):
         confirm.save()
         return Response(status=201)
         
-        
+class HomePageImageView(generics.ListAPIView):
+    serializer_class = HomePageImageSerializer
+    queryset = HomePageImage.objects.all()
             
         

@@ -5,8 +5,16 @@ from .utils import create_slug_shortcode
 from account.models import Profile,Company,BaseMixin
 User = get_user_model()
 
-
-
+class HomePageImage(models.Model):
+    image = models.ImageField()
+    
+    class Meta:
+        verbose_name = 'Homepage cover resmi'
+        verbose_name_plural = 'Homepage cover resmleri'
+    
+    def __str__(self):
+        return "Resm"
+    
 class BaseMixin(models.Model):
     slug = models.SlugField(unique=True,editable=False,blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
