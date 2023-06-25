@@ -175,7 +175,7 @@ class NotificationView(generics.ListAPIView):
         user = self.request.user
         print('baslangic')
         if user.is_authenticated:
-            print('uservar')
+
             com = Company.objects.filter(user=user).exists()
             tal = Profile.objects.filter(user=user).exists()
             print(com,tal)
@@ -192,7 +192,6 @@ class NotificationView(generics.ListAPIView):
                 elif talent.is_actor==True:
                     queryset = Notification.objects.filter(talant=talent) | Notification.objects.filter(for_actor = True)[0:10]
             else:
-                print('else hali')
                 queryset = Notification.objects.filter(for_none_users = True)[0:10]
         return queryset
     
