@@ -74,25 +74,29 @@ class CompanyLoginView(APIView):
         }
         
         return Response({"username": username, "tokens": tokens,"roles":roles}, status=201)
+"""
 
-
-
+{"full_name":"asdasd asdas","username":"asdssssss","password":"123123","phone_number":"1231231","eyecolor":"Sari","weight":12,"gender":"Male","haircolor":"SAri","height":12,"education":"asa"}"""
 
 class RegistrationView(APIView):     
     def post(self,request,format=None):
+
         data=request.data
 
-        userdata = {'username':data.pop('username')[0],
-                    'email':data.pop('email')[0],
-                    'password':data.pop('password')[0]}
+        userdata = {'username':data.pop('username'),
+                    'email':data.pop('email'),
+                    'password':data.pop('password')}
+    
         if data.get('fullname'):
-            first_name, last_name = data.pop('fullname')[0].split()
+
+            first_name, last_name = data.pop('fullname').split()
+     
             data['first_name'] = first_name
+    
             data['last_name'] = last_name
         user_serializer = UserRegisterSerializer(data=userdata)
         if user_serializer.is_valid():
             user = user_serializer.save()
-
             data['user'] = user.id
             profile_serializer = ProfileSerializer(data = data)
             if profile_serializer.is_valid():
