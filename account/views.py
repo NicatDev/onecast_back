@@ -82,15 +82,16 @@ class RegistrationView(APIView):
     def post(self,request,format=None):
 
         data=request.data
+        print(data)
 
-        userdata = {'username':data.pop('username'),
-                    'email':data.pop('email'),
-                    'password':data.pop('password')}
+        userdata = {'username':data.pop('username')[0],
+                    'email':data.pop('email')[0],
+                    'password':data.pop('password')[0]}
     
-        if data.get('fullname'):
-
-            first_name, last_name = data.pop('fullname').split()
-     
+        if data.get('fullname')[0]:
+            print(data.get('fullname'),data.get('fullname')[0],'---------------------------')
+            first_name, last_name = data.pop('fullname')[0].split()
+            
             data['first_name'] = first_name
     
             data['last_name'] = last_name

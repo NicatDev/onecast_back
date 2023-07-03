@@ -99,7 +99,6 @@ class Profile(BaseMixin):
     haircolor = models.CharField(max_length=14)
     height = models.SmallIntegerField()
     education = models.TextField()
-    age = models.PositiveIntegerField(null=True,blank=True)
     birthday = models.DateField(null=True,blank=True)
     cv = models.FileField(null=True,blank=True)
     image1 = models.ImageField(upload_to='media/images',null=True,blank=True)
