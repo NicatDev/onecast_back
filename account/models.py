@@ -117,7 +117,7 @@ class Profile(BaseMixin):
         ordering = ['-is_premium', '-created_at']
         
     def __str__(self):
-        return f'{self.first_name}-{self.last_name}-{self.age}'
+        return f'{self.first_name}-{self.last_name}-{self.birthday}'
     
 
 
