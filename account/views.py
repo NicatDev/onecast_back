@@ -95,6 +95,8 @@ class RegistrationView(APIView):
             data['first_name'] = first_name
     
             data['last_name'] = last_name
+            data['is_active'] = True
+            data['is_visible'] = True
         user_serializer = UserRegisterSerializer(data=userdata)
         if user_serializer.is_valid():
             user = user_serializer.save()
