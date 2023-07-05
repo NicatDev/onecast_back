@@ -433,9 +433,9 @@ class FilteredModelsView(APIView):
         model1_objects = Profile.objects.filter(query)
      
         model2_objects = Company.objects.filter(company_name__icontains=title)
-        modelsobj = model1_objects.objects.filter(is_model=True)
-        actorsobj = model1_objects.objects.filter(is_actor=True)
-        childsobj = model1_objects.objects.filter(is_child=True)
+        modelsobj = model1_objects.filter(is_model=True)
+        actorsobj = model1_objects.filter(is_actor=True)
+        childsobj = model1_objects.filter(is_child=True)
         models = FilterProfileSerializer(modelsobj, many=True)
         actors = FilterProfileSerializer(actorsobj, many=True)
         childs = FilterProfileSerializer(childsobj, many=True)
