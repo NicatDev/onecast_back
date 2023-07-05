@@ -3,8 +3,11 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
 from django.core.mail import send_mail
 from django.conf import settings
-
+from PIL import Image
+from .image_processing import generate_low_quality_image
 from account.models import *
+import os
+
 
 User = get_user_model()
 class AboutMeForRegisterSerializer(serializers.ModelSerializer):
@@ -59,6 +62,7 @@ class CompanySerializer(serializers.ModelSerializer):
         
 
 class ProfileForHomaPageTalentSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Profile
         fields = ('id','image1','is_premium','gender','first_name','last_name','is_actor','is_model','is_child',)
@@ -215,3 +219,19 @@ class ModelCategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelCategory
         fields = '__all__'
+
+
+class FilterProfileSerializer(serializers.ModelSerializer):
+ 
+    
+    class Meta:
+        model = Profile
+        fields = ('first_name','last_name','image1')
+
+class FilterCompanySerializer(serializers.ModelSerializer):
+
+    
+    class Meta:
+        model = Company
+        fields = ('company_name','id','slug','image')
+        

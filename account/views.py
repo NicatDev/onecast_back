@@ -4,12 +4,14 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from account.serializers import CompanyImageSerializer,CompanyForSingleSerializer,CompanySerializerForEdit,CompanySerializerForSettingEdit,ModelCategoryListSerializer,ActorCategoryListSerializer,ProfileImageSerializer,About_me_edit_Serializer,ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
+from account.serializers import FilterCompanySerializer,FilterProfileSerializer,CompanyImageSerializer,CompanyForSingleSerializer,CompanySerializerForEdit,CompanySerializerForSettingEdit,ModelCategoryListSerializer,ActorCategoryListSerializer,ProfileImageSerializer,About_me_edit_Serializer,ChangePasswordSerializer,CompanyListSerializer,ProfileForFilterPageSerializer,UserSerializerForSettingEdit,ProfileSerializerForSettingEdit,AboutMeForRegisterSerializer,UserRegisterSerializer,ProfileSerializer,CompanySerializer,PopularSerializer,ProfileForHomaPageTalentSerializer,ProfileForSingleSerializer
 from account.models import *
 from rest_framework.views import APIView
 from castingapp.filters import ProductFilter
 from castingapp.paginations import Custom9Pagination,Custom12Pagination
 from django.contrib.auth.hashers import check_password
+from django.db.models import Q
+
 User = get_user_model()
 
 class CheckLogin(APIView):
@@ -416,4 +418,26 @@ class EditCompanyImageView(generics.UpdateAPIView):
     serializer_class = CompanyImageSerializer
     lookup_field = 'id'
 
-    
+class FilteredModelsView(APIView):
+    def get(self, request):
+        title = request.GET.get('title')  
+        
+        name_parts = title.split(" ")
+        query = Q()
+        
+        if len(name_parts) == 1:
+            query = Q(first_name__icontains=title) | Q(last_name__icontains=title)
+        if len(name_parts)>1:
+            query = Q(last_name__icontains=name_parts[1]) | Q(first_name__icontains=name_parts[0])
+            query |= Q(last_name__icontains=name_parts[0]) | Q(first_name__icontains=name_parts[1])
+        model1_objects = Profile.objects.filter(query)
+     
+        model2_objects = Company.objects.filter(company_name__icontains=title)
+       
+        serialized_model1 = FilterProfileSerializer(model1_objects, many=True)
+        serialized_model2 = FilterCompanySerializer(model2_objects, many=True)
+
+        return Response({
+            'model': serialized_model1.data,
+            'company': serialized_model2.data
+        })
