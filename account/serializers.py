@@ -226,12 +226,12 @@ class FilterProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Profile
-        fields = ('first_name','last_name','image1')
+        fields = ('first_name','last_name','id')
 
 class FilterCompanySerializer(serializers.ModelSerializer):
 
     
     class Meta:
         model = Company
-        fields = ('company_name','id','slug','image')
+        fields = ('company_name','id','slug')
         
