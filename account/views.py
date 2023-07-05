@@ -428,8 +428,8 @@ class FilteredModelsView(APIView):
         if len(name_parts) == 1:
             query = Q(first_name__icontains=title) | Q(last_name__icontains=title)
         if len(name_parts)>1:
-            query = Q(last_name__icontains=name_parts[1]) | Q(first_name__icontains=name_parts[0])
-            query |= Q(last_name__icontains=name_parts[0]) | Q(first_name__icontains=name_parts[1])
+            query = Q(last_name__icontains=name_parts[1]) & Q(first_name__icontains=name_parts[0])
+            query |= Q(last_name__icontains=name_parts[0]) & Q(first_name__icontains=name_parts[1])
         model1_objects = Profile.objects.filter(query)
      
         model2_objects = Company.objects.filter(company_name__icontains=title)
