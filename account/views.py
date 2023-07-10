@@ -99,14 +99,15 @@ class RegistrationView(APIView):
 
         userdata = {'username':data.pop('username')[0],
                     'email':data.pop('email')[0],
-                    'password':data.pop('password')[0]}
+                    'password':data.pop('password')[0],
+                    'is_active':False}
     
         if data.get('fullname')[0]:
             print(data.get('fullname'),data.get('fullname')[0],'---------------------------')
             first_name, last_name = data.pop('fullname')[0].split()
             
             data['first_name'] = first_name
-    
+
             data['last_name'] = last_name
             data['is_active'] = True
             data['is_visible'] = True
@@ -120,6 +121,20 @@ class RegistrationView(APIView):
                 about_me_serializer = AboutMeForRegisterSerializer(data = {"profile":profile.id})
                 about_me_serializer.is_valid(raise_exception=True)
                 about_me_serializer.save()
+                send_mail(
+            'Yeni model ve ya aktyor',
+            f"{data['first_name']} {data['last_name']} adli user qeydiyyatdan kecdi !",
+            settings.EMAIL_HOST_USER,
+            ("nicat254memmedov@gmail.com",),
+            fail_silently=False,
+            )
+                send_mail(
+            'Qeydiyyat ucun tesekkurler',
+            f"Sizinle tezlikle elaqe saxlanilacaq ! Hormetle Onecast agency",
+            settings.EMAIL_HOST_USER,
+            (user.email,),
+            fail_silently=False,
+            )
             else:
                 print(profile_serializer.errors)
                 return Response({'Status':profile_serializer.errors,'error':'profile'},status=400)
