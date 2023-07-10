@@ -11,7 +11,9 @@ from castingapp.filters import ProductFilter
 from castingapp.paginations import Custom9Pagination,Custom12Pagination
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
-
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import EmailMessage
 User = get_user_model()
 
 class CheckLogin(APIView):
@@ -45,6 +47,15 @@ class TalentLoginView(APIView):
         else:
             roles = [2023]
         login(request, user)    
+        
+        emp = Profile.objects.get(user=user)
+        # send_mail(
+        #     'Login edildi',
+        #     emp.image1,
+        #     settings.EMAIL_HOST_USER,
+        #     ("nicat254memmedov@gmail.com",),
+        #     fail_silently=False,
+        # )
         
         refresh = RefreshToken.for_user(user)
         tokens = {
@@ -320,6 +331,24 @@ class ProfileImageEdit(generics.UpdateAPIView):
     serializer_class = ProfileImageSerializer
     lookup_field = 'id'
     
+    def perform_update(self, serializer):
+        # Call the superclass's perform_update method
+        super().perform_update(serializer)
+
+        # Get the updated profile object
+        profile = serializer.instance
+        email = EmailMessage(
+            'Login edildi',
+            'Here is the message content. You can include additional text.',
+            settings.EMAIL_HOST_USER,
+            ["nicat254memmedov@gmail.com"],
+        )
+   
+        email.attach_file(serializer.instance.image1.path)
+        email.attach_file(serializer.instance.image2.path)
+        email.attach_file(serializer.instance.image3.path)
+
+        email.send(fail_silently=False)    
 
 class CategoryEditView(APIView):
     queryset = Profile.objects.all()

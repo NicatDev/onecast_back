@@ -194,7 +194,7 @@ SIMPLE_JWT = {
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = 'nicat254memmedov@gmail.com'
-EMAIL_HOST_PASSWORD = 'xsamttqobonlenwb'
+EMAIL_HOST_PASSWORD = 'ysvzzrcubpibjflm'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True

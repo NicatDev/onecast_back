@@ -60,12 +60,13 @@ class DeleteFromFav(generics.DestroyAPIView):
 
     def perform_destroy(self, instance):
         instance.delete()
- 
+
 class DeleteFromFavWithTalentId(APIView):
     def post(self,request):
         talent_id = self.request.data.get('talent_id')
         user = self.request.user
         print(user)
+        
         try:
             fav = Favourites.objects.get(user=user,talent=talent_id)
         except:
